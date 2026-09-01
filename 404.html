@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+
+<!-- Pages serves this file for ANY unmatched path, however deep, so relative
+     asset URLs would resolve against the missing page instead of the site
+     root. A <base> pins them. The site lives at the domain root; the
+     github.io fallback serves it one level down, under /Portfolio/. -->
+<base href="/" />
+<script>
+  if (location.pathname.indexOf('/Portfolio/') === 0) {
+    document.getElementsByTagName('base')[0].href = '/Portfolio/';
+  }
+</script>
+
+<title>Page not found — Yenny.Design</title>
+<meta name="theme-color" content="#fcf7ee" />
+<meta name="robots" content="noindex" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="icon" href="img/icon/icon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="img/icon/apple-touch-icon.png" />
+<link rel="stylesheet" href="css/style.css" />
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   404 — the hero's pink band, nothing else. Same gradient rule as
+   every other section: the outer stop fades to a *tinted* zero-alpha
+   pink, never `transparent`, which would leave a grey halo.
+   The section is not clipped, so the falloff lands in open space.
+═══════════════════════════════════════════════════════════════ */
+body { background: #fcf7ee; }
+
+.lost {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+  padding: calc(var(--header-h) + var(--space-9)) var(--gutter) var(--space-10);
+}
+
+.lost::before {
+  content: '';
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 130%;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg,
+      rgba(var(--pink), 0)    0%,
+      rgba(var(--pink), 0.34) 26%,
+      rgba(var(--pink), 0.62) 48%,
+      rgba(var(--pink), 0.30) 72%,
+      rgba(var(--pink), 0)   100%);
+}
+
+.lost-code {
+  font-family: var(--font-script);
+  font-size: clamp(72px, 13vw, 190px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: var(--color-ink-strong);
+  margin: 0;
+}
+
+.lost-title {
+  font-family: var(--font-script);
+  font-size: clamp(20px, 2.4vw, 34px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  margin: var(--space-5) 0 0;
+  color: var(--color-ink);
+}
+
+.lost-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--color-ink-soft);
+  max-width: 46ch;
+  margin: var(--space-4) auto 0;
+}
+
+.lost-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  margin-top: var(--space-7);
+}
+
+.lost-actions a {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.85em 1.6em;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--color-ink);
+  transition: background 240ms var(--ease-out), transform 240ms var(--ease-out);
+}
+.lost-actions a:hover { background: rgba(255, 255, 255, 0.92); transform: translateY(-2px); }
+
+.lost-actions a.is-primary {
+  background: var(--color-ink-strong);
+  border-color: var(--color-ink-strong);
+  color: #fcf7ee;
+}
+.lost-actions a.is-primary:hover { background: #000; }
+
+/* The nav's burger needs page JS that this page deliberately doesn't carry,
+   so the three links simply stay visible all the way down. */
+@media (max-width: 860px) {
+  .lost .nav-links, .nav-sticky-wrap .nav-links { display: flex; gap: var(--space-4); }
+  .nav-burger { display: none; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="nav-sticky-wrap nav-sticky-wrap--ghost" id="header">
+  <nav class="nav" aria-label="Main">
+    <a href="index.html" class="nav-logo" aria-label="Yenny.Design — home">
+      <img src="img/logo.svg" alt="Yenny.Design" width="1067" height="261" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+</div>
+
+<main id="main">
+  <section class="lost">
+    <p class="lost-code">404</p>
+    <h1 class="lost-title">This page moved, or never existed.</h1>
+    <p class="lost-note">
+      Nothing lives at that address. The work is all still here — pick a way back in.
+    </p>
+    <div class="lost-actions">
+      <a class="is-primary" href="index.html">Home</a>
+      <a href="projects.html">Projects</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
