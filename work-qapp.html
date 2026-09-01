@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Q App — Yenny.Design</title>
+  <link rel="icon" href="img/icon/icon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="img/icon/apple-touch-icon.png" />
+<link rel="stylesheet" href="css/style.css" />
+  <style>
+
+    body { background: var(--color-bg); }
+
+    .case-wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(100px, 10vw, 130px) var(--pad-h) clamp(80px, 10vw, 160px);
+    }
+
+    /* ── Header ── */
+    .case-header {
+      padding-bottom: clamp(32px, 4vw, 56px);
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+      margin-bottom: clamp(40px, 5vw, 72px);
+    }
+
+    .case-eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .case-title {
+      font-family: var(--font-script);
+      font-size: clamp(24px, 2.2vw + 15px, 44px);
+      color: var(--color-text);
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      margin-bottom: clamp(24px, 3vw, 40px);
+    }
+
+    .case-tagline {
+      font-family: var(--font-mono);
+      font-size: var(--text-md);
+      color: var(--text-muted);
+      letter-spacing: -0.48px;
+      line-height: 1.6;
+      max-width: 620px;
+    }
+
+    /* ── Metadata ── */
+    .case-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(24px, 4vw, 64px);
+      margin-bottom: clamp(48px, 6vw, 80px);
+    }
+
+    .case-meta-item { display: flex; flex-direction: column; gap: 8px; }
+
+    .case-meta-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .case-meta-value {
+      font-family: var(--font-mono);
+      font-size: var(--text-md);
+      color: var(--color-text);
+      letter-spacing: -0.48px;
+      line-height: 1.4;
+    }
+
+    /* ── Hero image ── */
+    .case-hero-img {
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      background: #e2dede;
+      overflow: hidden;
+      margin-bottom: clamp(64px, 8vw, 120px);
+      border-radius: 4px;
+    }
+
+    .case-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .case-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono); font-size: var(--text-sm);
+      color: #aaa; letter-spacing: 0.05em;
+    }
+
+    /* ── Numbered sections ── */
+    .case-section {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: clamp(24px, 4vw, 64px);
+      margin-bottom: clamp(64px, 8vw, 120px);
+      align-items: start;
+    }
+
+    .case-section-num {
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding-top: 6px;
+    }
+
+    .case-section-inner { display: flex; flex-direction: column; gap: 24px; }
+
+    .case-section-title {
+      font-family: var(--font-mono);
+      font-size: var(--text-xl);
+      color: var(--color-text);
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 8px;
+    }
+
+    .case-section-body {
+      font-family: var(--font-mono);
+      font-size: var(--text-base);
+      color: var(--color-text);
+      letter-spacing: -0.48px;
+      line-height: 1.75;
+    }
+
+    .case-section-body p + p { margin-top: 16px; }
+
+    .case-insight {
+      border-left: 2px solid var(--color-text);
+      padding: 20px 24px;
+      background: rgba(0,0,0,0.03);
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(18px, 2vw, 24px);
+      color: var(--color-text);
+      letter-spacing: -0.5px;
+      line-height: 1.4;
+    }
+
+    /* ── Images ── */
+    .case-img-full {
+      width: 100%;
+      background: #e2dede;
+      overflow: hidden;
+      margin-bottom: clamp(64px, 8vw, 120px);
+      border-radius: 4px;
+    }
+
+    .case-img-full img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .case-img-full.ratio-16-9 { aspect-ratio: 16 / 9; }
+    .case-img-full.ratio-4-3  { aspect-ratio: 4 / 3; }
+    .case-img-full.ratio-3-2  { aspect-ratio: 3 / 2; }
+
+    /* transparent-background images — no grey fill, natural size */
+    .case-img-full.no-bg {
+      background: transparent;
+    }
+    .case-img-full.no-bg img {
+      object-fit: contain;
+      height: auto;
+    }
+
+    .case-img-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: clamp(64px, 8vw, 120px);
+    }
+
+    .case-img-duo .case-img-full { margin-bottom: 0; }
+
+    /* ── Trio collage ── */
+    .case-img-trio {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: clamp(64px, 8vw, 120px);
+    }
+
+    .case-img-trio .case-img-full { margin-bottom: 0; }
+
+    @media (max-width: 768px) {
+      .case-img-trio { grid-template-columns: 1fr; }
+    }
+
+    /* ── Stats ── */
+    .case-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(32px, 5vw, 80px);
+      padding: clamp(32px, 4vw, 56px) 0;
+      border-top: 1px solid rgba(0,0,0,0.10);
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+      margin-bottom: clamp(64px, 8vw, 120px);
+    }
+
+    .case-stat { display: flex; flex-direction: column; gap: 8px; }
+
+    .case-stat-number {
+      font-family: var(--font-script);
+      font-size: clamp(26px, 3.2vw, 44px);
+      color: var(--color-text);
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+    }
+
+    .case-stat-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      letter-spacing: -0.42px;
+      line-height: 1.4;
+      max-width: 160px;
+    }
+
+    /* ── Next project ── */
+    .case-next {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: clamp(40px, 5vw, 64px);
+      border-top: 1px solid rgba(0,0,0,0.10);
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .case-next:hover { opacity: 0.5; }
+
+    .case-next-label {
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .case-next-title {
+      font-family: var(--font-script);
+      font-size: clamp(20px, 2.6vw, 38px);
+      color: var(--color-text);
+      letter-spacing: 0.01em;
+    }
+
+    .case-next-arrow {
+      font-family: var(--font-mono);
+      font-size: clamp(24px, 3vw, 40px);
+      color: var(--color-text);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .case-section { grid-template-columns: 1fr; gap: 12px; }
+      .case-section-num { padding-top: 0; }
+      .case-img-duo { grid-template-columns: 1fr; }
+    }
+
+  </style>
+
+  <style>
+    /* ── Scroll reveal ── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    [data-reveal="left"]  { transform: translateX(-32px); }
+    [data-reveal="right"] { transform: translateX(32px); }
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+    [data-reveal][data-delay="1"] { transition-delay: 0.09s; }
+    [data-reveal][data-delay="2"] { transition-delay: 0.18s; }
+    [data-reveal][data-delay="3"] { transition-delay: 0.27s; }
+    [data-reveal][data-delay="4"] { transition-delay: 0.36s; }
+  </style>
+</head>
+<body>
+
+  <div class="nav-sticky-wrap"><nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.svg" alt="Yenny.Design" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav></div>
+<!-- Mobile menu overlay -->
+<div class="nav-overlay" id="nav-overlay">
+  <a href="projects.html">Projects</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+<script>
+  (function(){
+    var burger=document.getElementById('nav-burger');
+    var overlay=document.getElementById('nav-overlay');
+    if(!burger||!overlay) return;
+    burger.addEventListener('click',function(){
+      burger.classList.toggle('is-open');
+      overlay.classList.toggle('is-open');
+      document.body.style.overflow=overlay.classList.contains('is-open')?'hidden':'';
+    });
+    overlay.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){
+        burger.classList.remove('is-open');
+        overlay.classList.remove('is-open');
+        document.body.style.overflow='';
+      });
+    });
+  })();
+</script>
+
+  <main class="case-wrap">
+
+    <header class="case-header">
+      <p class="case-eyebrow">Mobile App · 2025</p>
+      <h1 class="case-title">Q App</h1>
+      <p class="case-tagline">A digital queuing platform that removes the frustration of waiting in line — offering real-time availability, personalized recommendations, and virtual queue management for bars, cafes, and restaurants.</p>
+    </header>
+
+    <div class="case-meta">
+      <div class="case-meta-item">
+        <span class="case-meta-label">Role</span>
+        <span class="case-meta-value">UX/UI Designer</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">Year</span>
+        <span class="case-meta-value">2025</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">Tools</span>
+        <span class="case-meta-value">Figma, After Effects, Illustrator</span>
+      </div>
+      <div class="case-meta-item">
+        <span class="case-meta-label">Type</span>
+        <span class="case-meta-value">Mobile App Design</span>
+      </div>
+    </div>
+
+    <div class="case-hero-img">
+      <img src="img/qapp/hero.webp" alt="Q App hero" />
+    </div>
+
+    <!-- 01 Overview -->
+    <div class="case-section">
+      <span class="case-section-num">01</span>
+      <div class="case-section-inner">
+        <h2 class="case-section-title">Overview</h2>
+        <div class="case-section-body">
+          <p>Q is a platform that provides digital queuing for bars, cafes and restaurants. It enhances the customers' experience of lining up for any busy business by providing real-time status of the venue and personalized recommendations of different places to choose from.</p>
+          <p>The project addresses a growing urban challenge — the friction of physical queuing in cities with high tourism and foot traffic — and transforms it into a seamless, mobile-first experience that benefits both customers and businesses.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 02 The Problem -->
+    <div class="case-section">
+      <span class="case-section-num">02</span>
+      <div class="case-section-inner">
+        <h2 class="case-section-title">The Problem</h2>
+        <div class="case-section-body">
+          <p>Queuing for a restaurant or bar has become a common phenomenon in Barcelona due to its high traffic of tourism and population. For customers, physical queuing can be a source of frustration, as it often entails long wait times in crowded and sometimes uncomfortable spaces.</p>
+          <p>Navigating through congested streets and sidewalks to physically queue outside a restaurant or business can detract from the overall experience — turning what should be an enjoyable outing into an exercise in patience.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-img-trio">
+      <div class="case-img-full no-bg">
+        <img src="img/qapp/problem-1.webp" alt="Problem context" />
+      </div>
+      <div class="case-img-full no-bg">
+        <img src="img/qapp/problem-2.webp" alt="Problem research" />
+      </div>
+      <div class="case-img-full no-bg">
+        <img src="img/qapp/problem-3.webp" alt="Problem insights" />
+      </div>
+    </div>
+
+    <!-- 03 Research & Discovery -->
+    <div class="case-section">
+      <span class="case-section-num">03</span>
+      <div class="case-section-inner">
+        <h2 class="case-section-title">Research &amp; Discovery</h2>
+        <div class="case-section-body">
+          <p>User research focused on identifying the pain points customers experience when queuing in busy areas. Through insights and behavioral observation, we mapped out the friction points across the full journey — from deciding where to eat, to arriving at the venue, to waiting and being seated.</p>
+        </div>
+        <blockquote class="case-insight">"If marketers don't know exactly which customers to target or what fuels their buying decisions, growth will always feel painfully slow. The solution? Customer research." — Katelyn Bourgoin</blockquote>
+      </div>
+    </div>
+
+    <div class="case-img-full no-bg">
+      <img src="img/qapp/painpoints.webp" alt="Pain points through insights" />
+    </div>
+
+    <div class="case-img-duo">
+      <div class="case-img-full no-bg">
+        <img src="img/qapp/research-1.webp" alt="Research frame 1" />
+      </div>
+      <div class="case-img-full no-bg">
+        <img src="img/qapp/research-2.webp" alt="Research frame 2" />
+      </div>
+    </div>
+
+    <!-- 04 Design Process -->
+    <div class="case-section">
+      <span class="case-section-num">04</span>
+      <div class="case-section-inner">
+        <h2 class="case-section-title">Design Process</h2>
+        <div class="case-section-body">
+          <p>The design process centered around four core functionalities derived directly from user research:</p>
+          <p><strong>Real-Time Availability &amp; Recommendations</strong> — The app provides users with live information on restaurant and bar availability, leveraging AI and user preferences to offer personalized alternatives.</p>
+          <p><strong>Virtual Queue Management</strong> — Users can join virtual queues for their preferred venues, eliminating the need to physically wait in line, with real-time notifications about estimated wait times.</p>
+          <p><strong>Map with Real-Time Queue Status</strong> — A map view shows nearby restaurants and bars with live queue status, helping users make quick decisions about where to dine.</p>
+          <p><strong>Revisitation for Businesses</strong> — By providing efficient queuing solutions, the app not only enhances the first-time visit but encourages repeat business and loyalty.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-img-full no-bg">
+      <img src="img/qapp/process.webp" alt="Design process overview" />
+    </div>
+
+    <!-- 05 Architecture & Style -->
+    <div class="case-section">
+      <span class="case-section-num">05</span>
+      <div class="case-section-inner">
+        <h2 class="case-section-title">Architecture &amp; Style</h2>
+        <div class="case-section-body">
+          <p>The information architecture was designed to minimize the number of steps between opening the app and joining a queue. The visual identity draws from a minimal, high-contrast aesthetic — reflecting the fast-paced, urban environment the app lives in.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-img-full no-bg">
+      <img src="img/qapp/architecture.webp" alt="Information architecture" />
+    </div>
+
+    <div class="case-img-full no-bg">
+      <img src="img/qapp/style.webp" alt="Style guide" />
+    </div>
+    <div class="case-img-full no-bg">
+      <img src="img/qapp/moodboard.webp" alt="Moodboard" />
+    </div>
+
+    <div class="case-img-full no-bg">
+      <img src="img/qapp/branding.webp" alt="Branding" />
+    </div>
+
+    <!-- 06 UI Design -->
+    <div class="case-section">
+      <span class="case-section-num">06</span>
+      <div class="case-section-inner">
+        <h2 class="case-section-title">UI Design</h2>
+        <div class="case-section-body">
+          <p>The final UI brings together the research insights, information architecture, and visual language into a cohesive mobile experience — clean, fast, and intuitive for users navigating Barcelona's dining scene in real time.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-img-full">
+      <img src="img/qapp/ui.webp" alt="Q App UI design" />
+    </div>
+
+    <div class="case-video">
+      <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:12px;">
+        <iframe
+          src="https://player.vimeo.com/video/1219702942?autoplay=0&title=0&byline=0&portrait=0"
+          style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      </div>
+    </div>
+
+    <a class="case-next" href="work-redo.html">
+      <div>
+        <p class="case-next-label">Next project</p>
+        <p class="case-next-title">REDO</p>
+      </div>
+      <span class="case-next-arrow">→</span>
+    </a>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer-bg"></div>
+    <div class="footer-inner">
+      <div class="footer-col-left">
+        <p class="footer-heading">Let's create</p>
+        <div class="footer-contact">
+        <a href="mailto:rong.yenny@gmail.com">Email</a>
+        <a href="https://instagram.com/yennyrong" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@yennyrong" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://www.linkedin.com/in/yennyrong" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+        <div class="footer-links-list">
+          <a href="files/Yenny-CV-ENGLISH.pdf" target="_blank">CV</a>
+          <a href="about.html">About</a>
+          <span>Behance (Not yet)</span>
+        </div>
+      </div>
+      <div class="footer-skills">
+        <div class="footer-skill-col">
+          <h4>Instruments</h4>
+          <ul><li>Figma</li><li>Cursor</li><li>Claude</li><li>Readymag</li><li>Framer</li><li>Illustrator</li></ul>
+        </div>
+        <div class="footer-skill-col">
+          <h4>Hard Skills</h4>
+          <ul><li>AI-Assisted Design</li><li>UX Research</li><li>UI Design</li><li>Web Design</li><li>Copywriting</li></ul>
+        </div>
+        <div class="footer-skill-col">
+          <h4>Soft Skills</h4>
+          <ul><li>Management</li><li>Presentation Skills</li><li>Multilingual</li><li>Teamwork</li><li>Multicultural</li></ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+    /* ── Scroll reveal — auto-target ── */
+    (function () {
+      const SELECTORS = [
+        '.case-header',
+        '.case-meta',
+        '.case-hero-img',
+        '.case-section',
+        '.case-img-full',
+        '.case-img-duo',
+        '.case-img-trio',
+        '.case-stats',
+        '.case-next',
+        '.case-video',
+        '.mockup-stage',
+        '.mockup-grid-2',
+        '.mockup-offset',
+        '.projects-heading',
+        '.project-card',
+        '.footer-col-left',
+        '.footer-skill-col',
+        '.footer-links-list',
+      ];
+
+      document.querySelectorAll(SELECTORS.join(',')).forEach(el => {
+        el.setAttribute('data-reveal', 'up');
+      });
+
+      /* stagger project-card siblings */
+      document.querySelectorAll('.projects-grid, .works-stage').forEach(grid => {
+        grid.querySelectorAll('.project-card, .work-card').forEach((card, i) => {
+          if (i > 0 && i <= 4) card.setAttribute('data-delay', String(i));
+        });
+      });
+
+      /* stagger case-section siblings */
+      document.querySelectorAll('.case-section').forEach((el, i) => {
+        // no stagger needed between sections — each triggers individually
+      });
+
+      /* stagger footer skill cols */
+      document.querySelectorAll('.footer-skill-col').forEach((el, i) => {
+        el.setAttribute('data-delay', String(i + 1));
+      });
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+    })();
+  </script>
+  <script src="js/trail.js"></script>
+</body>
+</html>

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Letterboxd App Case Study — Yenny.Design</title>
+<meta name="description" content="Letterboxd redesign — reading the whole app for friction, from the first log to the fiftieth list." />
+<meta name="theme-color" content="#faf8f5" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="icon" href="img/icon/icon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="img/icon/apple-touch-icon.png" />
+<link rel="stylesheet" href="css/style.css" />
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   CASE STUDY — image-led
+   Every section is one large visual carrying the argument, with a
+   caption-sized amount of prose beside it. Text earns its place
+   only where a picture can't make the point.
+═══════════════════════════════════════════════════════════════ */
+
+.case { padding-top: calc(var(--header-h) + var(--space-9)); }
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--container) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.wrap--text { max-width: calc(760px + var(--gutter) * 2); }
+
+/* ── Masthead ─────────────────────────────────────────────── */
+
+.case-kicker {
+  font-size: var(--text-sm);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+
+.case-title {
+  font-family: var(--font-script);
+  font-size: clamp(34px, 5.2vw, 72px);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+  color: var(--color-ink-strong);
+  margin-top: var(--space-4);
+}
+
+.case-standfirst {
+  margin-top: var(--space-5);
+  max-width: 44ch;
+  font-size: var(--text-md);
+  line-height: var(--leading-body);
+  color: var(--color-ink);
+}
+
+.case-facts {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--color-line);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: var(--space-6);
+}
+.case-fact { display: flex; flex-direction: column; gap: 6px; }
+.case-fact dt {
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+}
+.case-fact dd { font-size: var(--text-sm); line-height: 1.6; }
+
+/* ── Section rhythm ───────────────────────────────────────── */
+
+.chapter { margin-top: var(--space-11); }
+
+.chapter-head {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.chapter-num {
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  color: var(--color-ink-soft);
+  flex-shrink: 0;
+}
+.chapter-head h2 {
+  font-family: var(--font-script);
+  font-size: clamp(22px, 2.2vw + 12px, 38px);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  color: var(--color-ink-strong);
+  font-weight: 400;
+}
+
+.note {
+  max-width: 62ch;
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  color: var(--color-ink);
+}
+.note + .note { margin-top: var(--space-4); }
+
+.pull {
+  margin: var(--space-7) 0;
+  padding-left: var(--space-5);
+  border-left: 2px solid rgba(31, 31, 31, 0.25);
+  max-width: 52ch;
+  font-size: var(--text-md);
+  line-height: 1.55;
+  color: var(--color-ink-strong);
+}
+
+/* ── Image frames — the load-bearing element ──────────────── */
+
+.shots {
+  margin-top: var(--space-7);
+  display: grid;
+  gap: var(--space-5);
+}
+.shots--two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+.shot { position: relative; margin: 0; }
+
+.shot-frame {
+  position: relative;
+  aspect-ratio: var(--ar, 16 / 9);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 90% at 25% 15%, rgba(96, 220, 150, 0.16), rgba(96, 220, 150, 0) 62%),
+    linear-gradient(150deg, #1d2126 0%, #14181c 55%, #0e1114 100%);
+  box-shadow: var(--shadow-card);
+  display: grid;
+  place-items: center;
+}
+.shot-frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder state — shown until a real file exists at the src */
+.shot-empty {
+  display: none;
+  padding: var(--space-6);
+  text-align: center;
+  font-size: var(--text-sm);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.5);
+  max-width: 32ch;
+}
+.shot-empty::before {
+  content: '';
+  display: block;
+  width: 28px;
+  height: 28px;
+  margin: 0 auto var(--space-4);
+  border: 1.5px solid rgba(255, 255, 255, 0.3);
+  border-radius: 6px;
+}
+.shot.is-empty .shot-frame img { display: none; }
+.shot.is-empty .shot-empty { display: block; }
+
+.shot figcaption {
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 9px;
+  margin-right: 8px;
+  border-radius: 999px;
+  background: rgba(31, 31, 31, 0.07);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  vertical-align: 1px;
+}
+
+/* ── Journey cards — condensed to three lines each ────────── */
+
+.journeys {
+  margin-top: var(--space-7);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-5);
+}
+
+.journey {
+  padding: var(--space-6);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.55);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.journey.is-shipped { border-color: rgba(31, 122, 74, 0.4); }
+
+.journey-id {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-xs);
+  color: var(--color-ink-soft);
+}
+.journey-id b {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(31, 122, 74, 0.14);
+  color: #1f7a4a;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.journey h3 {
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-ink-strong);
+}
+.journey p { font-size: var(--text-sm); line-height: 1.6; color: var(--color-ink); }
+.journey p b { color: var(--color-ink-strong); }
+
+
+.screens-head {
+  margin-top: var(--space-9);
+  margin-bottom: var(--space-3);
+  font-size: var(--text-md);
+  font-weight: 700;
+  color: var(--color-ink-strong);
+}
+
+/* ── Screen galleries — the redesigned app frames ─────────── */
+
+.screens {
+  margin-top: var(--space-6);
+  display: grid;
+  /* auto-FILL, not auto-fit: auto-fit collapses the tracks it doesn't use, so a
+     group with only two screens stretched them across the whole row. auto-fill
+     keeps the empty tracks and every screen stays the same size. */
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: var(--space-5) var(--space-4);
+}
+
+.screen { margin: 0; }
+
+.screen-frame {
+  position: relative;
+  aspect-ratio: 402 / 875;          /* the Figma artboard size */
+  border-radius: 22px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 80% 70% at 30% 12%, rgba(96,220,150,0.14), rgba(96,220,150,0) 60%),
+    linear-gradient(150deg, #1d2126 0%, #14181c 55%, #0e1114 100%);
+  box-shadow: var(--shadow-card);
+  display: grid;
+  place-items: center;
+  transition: transform var(--dur-base) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+.screen:hover .screen-frame {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lift);
+}
+.screen-frame img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  /* `contain`, not `cover`: 16 of the 17 exports match the frame aspect
+     exactly and the taller rated variant would otherwise lose its bottom.
+     They're flattened onto the same near-black the frame ends on, so the
+     letterboxing is invisible. */
+  object-fit: contain;
+}
+
+.screen-empty {
+  display: none;
+  padding: var(--space-4);
+  text-align: center;
+  font-size: 11px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.45);
+}
+.screen-empty code {
+  display: block;
+  margin-top: 6px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.32);
+  word-break: break-all;
+}
+.screen.is-empty .screen-frame img { display: none; }
+.screen.is-empty .screen-empty { display: block; }
+
+.screen figcaption {
+  margin-top: 10px;
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  color: var(--color-ink-soft);
+}
+
+/* ── Prototype call to action ─────────────────────────────── */
+
+.proto {
+  margin-top: var(--space-7);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.proto-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px 26px;
+  border-radius: 999px;
+  background: var(--color-ink-strong);
+  color: #f4efe8;
+  font-size: var(--text-base);
+  font-weight: 700;
+  box-shadow: 0 8px 26px rgba(20, 8, 18, 0.22);
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+}
+.proto-btn:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(20, 8, 18, 0.3); }
+.proto-btn span { transition: transform var(--dur-base) var(--ease-out); }
+.proto-btn:hover span { transform: translate(3px, -3px); }
+
+.proto-note { font-size: var(--text-xs); color: var(--color-ink-soft); max-width: 34ch; }
+
+@media (max-width: 480px) {
+  .screens { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+
+/* ── Built diagrams (Frame / Research) ────────────────────── */
+
+.scope { margin-top: var(--space-7); }
+.scope-label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ink-soft);
+  margin-bottom: var(--space-4);
+}
+.pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-3);
+}
+.pillars li {
+  padding: var(--space-5) var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  color: var(--color-ink-strong);
+}
+
+.problems {
+  margin-top: var(--space-7);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-5);
+}
+.problem {
+  padding: var(--space-6);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(160deg, #1d2126 0%, #14181c 60%, #0e1114 100%);
+  color: rgba(255, 255, 255, 0.82);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.problem-n {
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  color: rgba(255, 255, 255, 0.42);
+}
+.problem h3 { font-size: var(--text-md); font-weight: 700; line-height: 1.35; color: #fff; }
+.problem p  { font-size: var(--text-sm); line-height: 1.65; }
+
+.diagram {
+  margin-top: var(--space-7);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.diagram svg { display: block; width: 100%; min-width: 780px; height: auto; }
+.diagram-caption {
+  margin-top: var(--space-3);
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  color: var(--color-ink-soft);
+}
+
+
+.diagram--sketch svg { min-width: 620px; }
+
+/* The recording is a phone screen with a lot of dead canvas around it, so
+   it's cropped to the device and shown at phone width rather than as a
+   1400px-wide mostly-black rectangle. */
+/* A wide 16:9 frame — the recording is a screen capture, so it reads as a
+   piece of footage rather than a device. */
+.proto-video {
+  margin: var(--space-7) 0 0;
+  padding: clamp(8px, 1vw, 14px);
+  border-radius: clamp(16px, 1.6vw, 24px);
+  background: linear-gradient(160deg, #23282d 0%, #14181c 55%, #0e1114 100%);
+  box-shadow: var(--shadow-lift);
+  line-height: 0;
+}
+.proto-video video {
+  border-radius: clamp(10px, 1vw, 16px);
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+.proto-video video { display: block; width: 100%; height: auto; }
+
+/* ── Next project ─────────────────────────────────────────── */
+
+.case-next {
+  margin-top: var(--space-11);
+  padding-top: var(--space-8);
+  border-top: 1px solid var(--color-line);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+.case-next-title {
+  font-family: var(--font-script);
+  font-size: clamp(20px, 2.6vw, 38px);
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  color: var(--color-ink-strong);
+}
+.case-next a:hover .case-next-title { opacity: 0.6; }
+
+@media (max-width: 700px) {
+  .shots--two { grid-template-columns: minmax(0, 1fr); }
+  .chapter-head { flex-direction: column; gap: 4px; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="nav-sticky-wrap" id="header">
+  <nav class="nav" aria-label="Main">
+    <a href="index.html" class="nav-logo" aria-label="Yenny.Design — home">
+      <img src="img/logo.svg" alt="Yenny.Design" width="1067" height="261" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="projects.html" aria-current="page">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</div>
+
+<div class="nav-overlay" id="nav-overlay">
+  <a href="projects.html">Projects</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main id="main" class="case">
+
+  <!-- ══ Masthead ══ -->
+  <header class="wrap">
+    <p class="case-kicker" data-reveal>Personal project · UX/UI · 2025</p>
+    <h1 class="case-title" data-reveal data-delay="1">Letterboxd</h1>
+    <p class="case-standfirst" data-reveal data-delay="2">
+      Reading the whole app for friction — from the first log to the fiftieth list.
+    </p>
+
+    <dl class="case-facts" data-reveal data-delay="3">
+      <div class="case-fact"><dt>Type</dt><dd>Personal project</dd></div>
+      <div class="case-fact"><dt>Tools</dt><dd>Figma · Figma Make · Claude</dd></div>
+      <div class="case-fact"><dt>Scope</dt><dd>UX research · UI redesign · Prototyping</dd></div>
+      <div class="case-fact"><dt>Status</dt><dd>In production</dd></div>
+    </dl>
+
+    <div class="proto" data-reveal data-delay="4">
+      <a class="proto-btn" href="https://www.figma.com/make/sSIf1ukfxDH9tdS73ETvVx/Implement-Movie-Card-Actions?t=ySqm4IubNYsSzyoe-1"
+         target="_blank" rel="noopener">Open the prototype <span aria-hidden="true">&#8599;</span></a>
+      <p class="proto-note">Built in Figma Make.</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <div class="shots" data-reveal>
+      <figure class="shot">
+        <div class="shot-frame" style="--ar: 16 / 9">
+          <img src="img/letterboxd/hero.jpg" alt="Letterboxd redesign — overview of the redesigned screens"
+               onerror="this.closest('.shot').classList.add('is-empty')" />
+          <p class="shot-empty">letterboxd/hero.jpg — redesign overview</p>
+        </div>
+      </figure>
+    </div>
+
+    <!-- ══ 01 Frame ══ -->
+    <section class="chapter" data-reveal>
+      <div class="chapter-head"><span class="chapter-num">01</span><h2>Frame</h2></div>
+      <p class="note">
+        I started using Letterboxd to keep a proper log of what I watch. For an app
+        built around something as simple as logging a film, the everyday experience
+        is rougher than it should be.
+      </p>
+      <p class="pull">
+        Every primary action — log, rate, watchlist — sits behind a “⋯” menu instead
+        of on the film page.
+      </p>
+      <p class="note">
+        Naming doesn't help either: “Journal” reads like a personal diary but is
+        actually the editorial section. Several menu pages overlap in purpose.
+        <b>The objective:</b> improve the UX and UI while leaving the branding intact.
+      </p>
+
+      <div class="scope" data-reveal>
+        <p class="scope-label">Scope — the six pillars</p>
+        <ul class="pillars">
+          <li>Logging &amp; rating</li>
+          <li>Watchlist</li>
+          <li>Discovery</li>
+          <li>Lists &amp; curation</li>
+          <li>Profile &amp; social</li>
+          <li>Reviews</li>
+        </ul>
+      </div>
+
+      <div class="problems" data-reveal>
+        <article class="problem">
+          <span class="problem-n">01 — Depth</span>
+          <h3>Everything lives behind “⋯”</h3>
+          <p>Log, rate and watchlist are each one menu deeper than they need to be,
+             on the single screen where you'd actually reach for them.</p>
+        </article>
+        <article class="problem">
+          <span class="problem-n">02 — Naming</span>
+          <h3>“Journal” isn't a journal</h3>
+          <p>It reads as a personal diary. It's the editorial section — interviews,
+             festival coverage, criticism. The label describes the wrong thing.</p>
+        </article>
+        <article class="problem">
+          <span class="problem-n">03 — Redundancy</span>
+          <h3>Five tabs, nearly one grid</h3>
+          <p>Films, Diary, Watched, Likes and Ratings each show a slightly filtered
+             version of the same posters. More pages, less clarity.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ══ 02 Research ══ -->
+    <section class="chapter" data-reveal>
+      <div class="chapter-head"><span class="chapter-num">02</span><h2>Research</h2></div>
+      <p class="note">
+        Instead of a heuristic scorecard: a full screen-by-screen flow map in FigJam,
+        annotating friction where it actually happens, then grouping issues by
+        <b>Jobs to Be Done</b> rather than by app section.
+      </p>
+      <p class="pull">
+        The app feels built first and designed second — features layered on over time
+        rather than planned as one system.
+      </p>
+
+      <div class="diagram" data-reveal>
+        <svg viewBox="0 0 1110 500" role="img" aria-label="Flow map of the Letterboxd app with friction points marked">
+        <path d="M154 251.0 C 244 251.0, 210 57, 300 57" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <path d="M450 57 L 600 57" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <rect x="300" y="34" width="150" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="375.0" y="62.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">Film page</text>
+        <rect x="600" y="34" width="250" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="725.0" y="62.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">Log · Rate · Watchlist</text>
+        <circle cx="866" cy="57" r="5" fill="#c8551f"/>
+        <text x="880" y="62" font-family="ui-monospace,monospace" font-size="13" fill="#c8551f">buried behind ⋯</text>
+        <path d="M154 251.0 C 244 251.0, 210 149, 300 149" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <path d="M450 149 L 600 149" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <rect x="300" y="126" width="150" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="375.0" y="154.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">Discovery</text>
+        <rect x="600" y="126" width="250" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="725.0" y="154.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">Filters</text>
+        <circle cx="866" cy="149" r="5" fill="#c8551f"/>
+        <text x="880" y="154" font-family="ui-monospace,monospace" font-size="13" fill="#c8551f">decorative, not wired</text>
+        <path d="M154 251.0 C 244 251.0, 210 241, 300 241" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <path d="M450 241 L 600 241" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <rect x="300" y="218" width="150" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="375.0" y="246.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">My Lists</text>
+        <rect x="600" y="218" width="250" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="725.0" y="246.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">Reorder a list</text>
+        <circle cx="866" cy="241" r="5" fill="#c8551f"/>
+        <text x="880" y="246" font-family="ui-monospace,monospace" font-size="13" fill="#c8551f">type a position number</text>
+        <path d="M154 251.0 C 244 251.0, 210 333, 300 333" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <path d="M450 333 L 600 333" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <rect x="300" y="310" width="150" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="375.0" y="338.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">News</text>
+        <rect x="600" y="310" width="250" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="725.0" y="338.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">Editorial feed</text>
+        <circle cx="866" cy="333" r="5" fill="#c8551f"/>
+        <text x="880" y="338" font-family="ui-monospace,monospace" font-size="13" fill="#c8551f">labelled “Journal”</text>
+        <path d="M154 251.0 C 244 251.0, 210 425, 300 425" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <path d="M450 425 L 600 425" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
+        <rect x="300" y="402" width="150" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="375.0" y="430.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">Profile</text>
+        <rect x="600" y="402" width="250" height="46" rx="10" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/><text x="725.0" y="430.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="400" fill="#1f1f1f">Films / Diary / Likes</text>
+        <circle cx="866" cy="425" r="5" fill="#c8551f"/>
+        <text x="880" y="430" font-family="ui-monospace,monospace" font-size="13" fill="#c8551f">five tabs, one grid</text>
+        <rect x="24" y="228" width="130" height="46" rx="10" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/><text x="89.0" y="256.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="15" font-weight="700" fill="#1f1f1f">Home</text>
+        <circle cx="30" cy="474" r="5" fill="#c8551f"/><text x="44" y="479" font-family="ui-monospace,monospace" font-size="13" fill="#585858">friction logged on the board</text>
+        </svg>
+        <p class="diagram-caption">The flow map redrawn — every surface walked, friction marked where it happens. Clustering those marks by what the person was trying to do is what produced the six jobs below.</p>
+      </div>
+    </section>
+
+    <!-- ══ 03 Define ══ -->
+    <section class="chapter" data-reveal>
+      <div class="chapter-head"><span class="chapter-num">03</span><h2>Six jobs, six journeys</h2></div>
+
+      <div class="journeys">
+        <article class="journey is-shipped">
+          <p class="journey-id">J01 <b>Shipped</b></p>
+          <h3>Remember what I've watched</h3>
+          <p><b>Friction —</b> every action behind “⋯”; quick-add marks watched with no confirmation.</p>
+          <p><b>Fix —</b> log, rate and watchlist directly on the film page.</p>
+        </article>
+
+        <article class="journey is-shipped">
+          <p class="journey-id">J02 <b>Shipped</b></p>
+          <h3>Decide what to watch next</h3>
+          <p><b>Friction —</b> the watchlist is a flat add-order grid; no sort, no recommendation surface.</p>
+          <p><b>Fix —</b> live filters and sort on the list itself.</p>
+        </article>
+
+        <article class="journey is-shipped">
+          <p class="journey-id">J03 <b>Shipped</b></p>
+          <h3>Build and share a collection</h3>
+          <p><b>Friction —</b> reordering means toggling “Ranked List”, then typing a position number per film.</p>
+          <p><b>Fix —</b> native drag-to-reorder, on by default.</p>
+        </article>
+
+        <article class="journey is-shipped">
+          <p class="journey-id">J06 <b>Shipped</b></p>
+          <h3>Stay current on film culture</h3>
+          <p><b>Friction —</b> “Journal” reads as personal diary; it's editorial content.</p>
+          <p><b>Fix —</b> rename to News, matching the real-world term.</p>
+        </article>
+
+        <article class="journey is-shipped">
+          <p class="journey-id">J04 <b>Shipped</b></p>
+          <h3>Follow people whose taste I trust</h3>
+          <p><b>Friction —</b> Films, Diary, Watched, Likes and Ratings are five tabs of nearly the same grid.</p>
+          <p><b>Fix —</b> one profile, plus a Friends tab that makes activity worth checking.</p>
+        </article>
+
+        <article class="journey">
+          <p class="journey-id">J05 · Parked</p>
+          <h3>Say something about a film</h3>
+          <p><b>Friction —</b> formatting a review on web means hand-typing HTML tags.</p>
+          <p><b>Why parked —</b> the mobile composer is designed; the web toolbar is a separate fight.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ══ 04 Ideate ══ -->
+    <section class="chapter" data-reveal>
+      <div class="chapter-head"><span class="chapter-num">04</span><h2>Choosing what to build</h2></div>
+      <p class="note">
+        Six journeys is more than one case study should try to fix. Plotting them by
+        impact against effort picked the first three plus the Journal rename; J04 and
+        J05 were parked.
+      </p>
+
+      <div class="diagram" data-reveal>
+        <svg viewBox="0 0 1080 500" role="img" aria-label="Impact versus effort matrix with the six journeys plotted">
+        <rect x="120" y="40" width="780" height="380" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/>
+        <line x1="510.0" y1="40" x2="510.0" y2="420" stroke="rgba(31,31,31,0.22)" stroke-dasharray="4 5"/>
+        <line x1="120" y1="230.0" x2="900" y2="230.0" stroke="rgba(31,31,31,0.22)" stroke-dasharray="4 5"/>
+        <text x="315.0" y="63.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="rgba(31,31,31,0.30)">quick wins</text>
+        <text x="705.0" y="63.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="rgba(31,31,31,0.30)">big bets</text>
+        <text x="315.0" y="405.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="rgba(31,31,31,0.30)">nice to have</text>
+        <text x="705.0" y="405.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="12" fill="rgba(31,31,31,0.30)">money pits</text>
+        <text x="106" y="230.0" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#585858" transform="rotate(-90 106 230.0)">Impact →</text>
+        <text x="510.0" y="454" text-anchor="middle" font-family="ui-monospace,monospace" font-size="13" fill="#585858">Effort →</text>
+        <circle cx="221" cy="131" r="9" fill="#1f7a4a"/>
+        <text x="237" y="129" text-anchor="start" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#1f1f1f">J6</text>
+        <text x="237" y="146" text-anchor="start" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Rename Journal</text>
+        <circle cx="377" cy="78" r="9" fill="#1f7a4a"/>
+        <text x="393" y="76" text-anchor="start" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#1f1f1f">J1</text>
+        <text x="393" y="93" text-anchor="start" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Surface log actions</text>
+        <circle cx="541" cy="150" r="9" fill="#1f7a4a"/>
+        <text x="557" y="148" text-anchor="start" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#1f1f1f">J3</text>
+        <text x="557" y="165" text-anchor="start" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Drag to reorder</text>
+        <circle cx="487" cy="253" r="9" fill="#2f6f9e"/>
+        <text x="503" y="251" text-anchor="start" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#1f1f1f">J2</text>
+        <text x="503" y="268" text-anchor="start" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Filter the watchlist</text>
+        <circle cx="775" cy="177" r="7" fill="#9a9691" fill-opacity="0.55"/>
+        <text x="759" y="175" text-anchor="end" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#1f1f1f">J4</text>
+        <text x="759" y="192" text-anchor="end" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Consolidate profile</text>
+        <circle cx="565" cy="352" r="7" fill="#9a9691" fill-opacity="0.55"/>
+        <text x="581" y="350" text-anchor="start" font-family="ui-monospace,monospace" font-size="14" font-weight="700" fill="#1f1f1f">J5</text>
+        <text x="581" y="367" text-anchor="start" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Review toolbar (web)</text>
+        <circle cx="126" cy="468" r="6" fill="#1f7a4a" fill-opacity="1"/>
+        <text x="140" y="473" font-family="ui-monospace,monospace" font-size="12" fill="#585858">built this pass</text>
+        <circle cx="288.0" cy="468" r="6" fill="#2f6f9e" fill-opacity="1"/>
+        <text x="302.0" y="473" font-family="ui-monospace,monospace" font-size="12" fill="#585858">stretch</text>
+        <circle cx="392.4" cy="468" r="6" fill="#9a9691" fill-opacity="0.55"/>
+        <text x="406.4" y="473" font-family="ui-monospace,monospace" font-size="12" fill="#585858">parked</text>
+        </svg>
+        <p class="diagram-caption">J1–J6 plotted by impact against effort. The rename was almost free, logging
+        was the biggest single win, and the two parked jobs sit where the cost stopped making sense for one pass.</p>
+      </div>
+
+      <div class="diagram diagram--sketch" data-reveal>
+        <svg viewBox="0 0 760 440" role="img" aria-label="Three concept directions for the film-page actions">
+        <text x="20" y="26" font-family="ui-monospace,monospace" font-size="13" font-weight="700" fill="#1f1f1f">A — Inline bar</text>
+        <rect x="20" y="40" width="210" height="340" rx="24" fill="#ffffff" stroke="rgba(31,31,31,0.22)" stroke-width="1"/>
+        <rect x="38" y="64" width="174" height="104" rx="8" fill="#efece7"/>
+        <text x="125.0" y="122" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" fill="rgba(31,31,31,0.42)">poster</text>
+        <rect x="38.0" y="182" width="38.2" height="32" rx="9" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/>
+        <text x="57.1" y="202" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#585858">Log</text>
+        <rect x="83.2" y="182" width="38.2" height="32" rx="9" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/>
+        <text x="102.4" y="202" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#585858">Rate</text>
+        <rect x="128.5" y="182" width="38.2" height="32" rx="9" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/>
+        <text x="147.6" y="202" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#585858">List</text>
+        <rect x="173.8" y="182" width="38.2" height="32" rx="9" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/>
+        <text x="192.9" y="202" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#585858">Seen</text>
+        <rect x="38" y="234" width="174" height="9" rx="4.5" fill="#eeeae4"/>
+        <rect x="38" y="258" width="174" height="9" rx="4.5" fill="#eeeae4"/>
+        <rect x="38" y="282" width="112" height="9" rx="4.5" fill="#eeeae4"/>
+        <text x="20" y="406" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Always visible.</text>
+        <text x="20" y="424" font-family="ui-monospace,monospace" font-size="12" fill="#585858">More weight per page.</text>
+        <text x="275" y="26" font-family="ui-monospace,monospace" font-size="13" font-weight="700" fill="#1f1f1f">B — Bottom sheet</text>
+        <rect x="275" y="40" width="210" height="340" rx="24" fill="#ffffff" stroke="rgba(31,31,31,0.22)" stroke-width="1"/>
+        <rect x="293" y="64" width="174" height="104" rx="8" fill="#efece7"/>
+        <text x="380.0" y="122" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" fill="rgba(31,31,31,0.42)">poster</text>
+        <rect x="293" y="186" width="174" height="9" rx="4.5" fill="#eeeae4"/>
+        <rect x="293" y="210" width="174" height="9" rx="4.5" fill="#eeeae4"/>
+        <rect x="293" y="234" width="112" height="9" rx="4.5" fill="#eeeae4"/>
+        <path d="M380.0 268 l0 -20 m-6 7 l6 -7 l6 7" stroke="#585858" stroke-width="1.4" fill="none" stroke-linecap="round"/>
+        <rect x="283" y="282" width="194" height="90" rx="18" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/>
+        <rect x="362.0" y="293" width="36" height="4" rx="2" fill="rgba(31,31,31,0.25)"/>
+        <rect x="299.0" y="308" width="36.0" height="26" rx="8" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/>
+        <text x="317.0" y="325" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#585858">Log</text>
+        <rect x="341.0" y="308" width="36.0" height="26" rx="8" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/>
+        <text x="359.0" y="325" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#585858">Rate</text>
+        <rect x="383.0" y="308" width="36.0" height="26" rx="8" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/>
+        <text x="401.0" y="325" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#585858">List</text>
+        <rect x="425.0" y="308" width="36.0" height="26" rx="8" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/>
+        <text x="443.0" y="325" text-anchor="middle" font-family="ui-monospace,monospace" font-size="8" fill="#585858">Seen</text>
+        <text x="275" y="406" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Page stays clean.</text>
+        <text x="275" y="424" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Gesture isn’t obvious.</text>
+        <text x="530" y="26" font-family="ui-monospace,monospace" font-size="13" font-weight="700" fill="#1f1f1f">C — Inline bar</text>
+        <text x="740" y="26" text-anchor="end" font-family="ui-monospace,monospace" font-size="11" fill="#1f7a4a">selected ✓</text>
+        <rect x="530" y="40" width="210" height="340" rx="24" fill="#ffffff" stroke="#1f7a4a" stroke-width="2"/>
+        <rect x="548" y="64" width="174" height="104" rx="8" fill="#efece7"/>
+        <text x="635.0" y="122" text-anchor="middle" font-family="ui-monospace,monospace" font-size="11" fill="rgba(31,31,31,0.42)">poster</text>
+        <rect x="548.0" y="182" width="38.2" height="32" rx="9" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/>
+        <text x="567.1" y="202" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#585858">Log</text>
+        <rect x="593.2" y="182" width="38.2" height="32" rx="9" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/>
+        <text x="612.4" y="202" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#585858">Rate</text>
+        <rect x="638.5" y="182" width="38.2" height="32" rx="9" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/>
+        <text x="657.6" y="202" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#585858">List</text>
+        <rect x="683.8" y="182" width="38.2" height="32" rx="9" fill="#f2efe9" stroke="rgba(31,31,31,0.22)"/>
+        <text x="702.9" y="202" text-anchor="middle" font-family="ui-monospace,monospace" font-size="9" fill="#585858">Seen</text>
+        <rect x="548" y="234" width="174" height="9" rx="4.5" fill="#eeeae4"/>
+        <rect x="548" y="258" width="174" height="9" rx="4.5" fill="#eeeae4"/>
+        <rect x="548" y="282" width="112" height="9" rx="4.5" fill="#eeeae4"/>
+        <text x="530" y="406" font-family="ui-monospace,monospace" font-size="12" fill="#585858">Matches the flow map.</text>
+        <text x="530" y="424" font-family="ui-monospace,monospace" font-size="12" fill="#585858">No hidden gesture.</text>
+        </svg>
+        <p class="diagram-caption">Three directions for surfacing the film-page actions, before committing to one.</p>
+      </div>
+    </section>
+
+    <!-- ══ 05 Design ══ -->
+    <section class="chapter" data-reveal>
+      <div class="chapter-head"><span class="chapter-num">05</span><h2>Design</h2></div>
+      <p class="note">
+        One system across every journey: dark theme, glass surfaces, rounded actions,
+        and three accents each doing exactly one job — green for logging, sky blue for
+        a chosen option among several, orange for something new needing attention.
+      </p>
+
+      <h3 class="screens-head">Logging — J01</h3>
+      <p class="note">The buried “⋯” menu is gone. Log, Rate &amp; Review, Watchlist and Add to List sit in one bar on the film page, the same four wherever you arrived from. A long-press on any poster surfaces them without opening the page at all.</p>
+      <p class="note"><b>Resolves —</b> buried CTAs, unconfirmed quick-add.</p>
+      <div class="screens">
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/home.webp" alt="Home" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Home<code>letterboxd/home.webp</code><code>Home · 227:1872</code></p>
+          </div>
+          <figcaption>Home</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/home-longpress.webp" alt="Home — long-press quick actions" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Home — long-press quick actions<code>letterboxd/home-longpress.webp</code><code>Home — Long-press quick actions · 255:18</code></p>
+          </div>
+          <figcaption>Home — long-press quick actions</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/film.webp" alt="Film page — inline action bar" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Film page — inline action bar<code>letterboxd/film.webp</code><code>Movie Info Page · 260:2</code></p>
+          </div>
+          <figcaption>Film page — inline action bar</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/film-rated.webp" alt="Film page — rated state" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Film page — rated state<code>letterboxd/film-rated.webp</code><code>Movie Info Page — Rated (variant) · 386:26</code></p>
+          </div>
+          <figcaption>Film page — rated state</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/rate-review.webp" alt="Rate &amp; Review composer" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Rate &amp; Review composer<code>letterboxd/rate-review.webp</code><code>Rate &amp; Review · 266:2</code></p>
+          </div>
+          <figcaption>Rate &amp; Review composer</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/diary-calendar.webp" alt="Diary — calendar" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Diary — calendar<code>letterboxd/diary-calendar.webp</code><code>Diary — Calendar (Default) · 264:2</code></p>
+          </div>
+          <figcaption>Diary — calendar</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/diary-list.webp" alt="Diary — list view" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Diary — list view<code>letterboxd/diary-list.webp</code><code>Diary — List view · 265:2</code></p>
+          </div>
+          <figcaption>Diary — list view</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="screens-head">Discovery — J02</h3>
+      <p class="note">Filters that actually filter: tap a genre chip and the grid updates live, sky blue marking the choice. The filters that aren't wired yet are labelled as such rather than faked.</p>
+      <p class="note"><b>Resolves —</b> decorative filters, no browsing path.</p>
+      <div class="screens">
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/discovery.webp" alt="Discovery" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Discovery<code>letterboxd/discovery.webp</code><code>Discovery · 356:83</code></p>
+          </div>
+          <figcaption>Discovery</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/discovery-filters.webp" alt="Discovery — filters open" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Discovery — filters open<code>letterboxd/discovery-filters.webp</code><code>Discovery/filters open · 356:271</code></p>
+          </div>
+          <figcaption>Discovery — filters open</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="screens-head">Lists — J03</h3>
+      <p class="note">Watchlist gets top billing as the list everyone already has; everything else sits below with a cover mosaic and a public/private badge. Reordering is drag-and-drop — no “Ranked List” toggle, no typing position numbers.</p>
+      <p class="note"><b>Resolves —</b> clunky reordering, no dedicated list home.</p>
+      <div class="screens">
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/lists-hub.webp" alt="My Lists — hub" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">My Lists — hub<code>letterboxd/lists-hub.webp</code><code>My Lists — Hub (Default) · 363:2</code></p>
+          </div>
+          <figcaption>My Lists — hub</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/watchlist.webp" alt="Watchlist — detail" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Watchlist — detail<code>letterboxd/watchlist.webp</code><code>Watchlist — Detail · 368:2</code></p>
+          </div>
+          <figcaption>Watchlist — detail</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/list-detail.webp" alt="A curated list" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">A curated list<code>letterboxd/list-detail.webp</code><code>My List — Best of the Decade · 369:2</code></p>
+          </div>
+          <figcaption>A curated list</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/list-create.webp" alt="Create a new list" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Create a new list<code>letterboxd/list-create.webp</code><code>Create New List · 370:2</code></p>
+          </div>
+          <figcaption>Create a new list</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="screens-head">Profile &amp; social — J04</h3>
+      <p class="note">One profile with one clear identity: films logged, followers, following and a liked-films grid up front. A Friends tab paired with News turns other people's activity into something worth checking, and notifications get their own surface.</p>
+      <div class="screens">
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/profile.webp" alt="Profile" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Profile<code>letterboxd/profile.webp</code><code>Profile · 372:2</code></p>
+          </div>
+          <figcaption>Profile</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/news-friends.webp" alt="News — Friends tab" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">News — Friends tab<code>letterboxd/news-friends.webp</code><code>News — Friends tab · 353:44</code></p>
+          </div>
+          <figcaption>News — Friends tab</figcaption>
+        </figure>
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/notifications.webp" alt="Notifications" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">Notifications<code>letterboxd/notifications.webp</code><code>Notifications · 371:2</code></p>
+          </div>
+          <figcaption>Notifications</figcaption>
+        </figure>
+      </div>
+
+      <h3 class="screens-head">Film culture — J06</h3>
+      <p class="note">“Journal” becomes News — the real-world term for what it actually is: editorial, interviews and festival coverage, not a personal diary.</p>
+      <p class="note"><b>Resolves —</b> a nav label that described the wrong thing.</p>
+      <div class="screens">
+        <figure class="screen">
+          <div class="screen-frame">
+            <img src="img/letterboxd/news.webp" alt="News tab" loading="lazy"
+                 onerror="this.closest('.screen').classList.add('is-empty')" />
+            <p class="screen-empty">News tab<code>letterboxd/news.webp</code><code>News — News tab (Default) · 352:2</code></p>
+          </div>
+          <figcaption>News tab</figcaption>
+        </figure>
+      </div>
+
+    </section>
+
+    <!-- ══ 06 Reflect ══ -->
+    <section class="chapter" data-reveal>
+      <div class="chapter-head"><span class="chapter-num">06</span><h2>Reflect</h2></div>
+      <p class="note">
+        The most useful decision was mapping the whole app before touching a single
+        screen. Grouping friction by what people are trying to do — rather than by
+        which tab it lives in — turned a long list of annoyances into six jobs, and
+        made it obvious which two to leave alone.
+      </p>
+    </section>
+
+    <!-- ══ 07 Prototype ══ -->
+    <section class="chapter" data-reveal>
+      <div class="chapter-head"><span class="chapter-num">07</span><h2>The prototype</h2></div>
+      <p class="note">
+        The film-page actions built as something you can actually press — logging a
+        film, rating it, and adding it to a list, end to end.
+      </p>
+
+      <figure class="proto-video">
+        <video id="proto-video" src="video/prototype.mp4"
+               poster="video/prototype-poster.jpg"
+               muted loop playsinline preload="none" controls
+               aria-label="Screen recording of the Letterboxd prototype"></video>
+      </figure>
+
+      <div class="proto">
+        <a class="proto-btn" href="https://www.figma.com/make/sSIf1ukfxDH9tdS73ETvVx/Implement-Movie-Card-Actions?t=ySqm4IubNYsSzyoe-1"
+           target="_blank" rel="noopener">See the Figma Make prototype <span aria-hidden="true">&#8599;</span></a>
+      </div>
+    </section>
+
+    <nav class="case-next" aria-label="Next project">
+      <span class="case-kicker">Next project</span>
+      <a href="work-redo.html"><span class="case-next-title">Re·do →</span></a>
+    </nav>
+
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-bg" aria-hidden="true"></div>
+  <div class="footer-inner">
+
+    <div class="footer-col-left" data-reveal>
+      <p class="footer-heading">Let's create</p>
+      <div class="footer-contact">
+        <a href="mailto:rong.yenny@gmail.com">Email</a>
+        <a href="https://instagram.com/yennyrong" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@yennyrong" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://www.linkedin.com/in/yennyrong" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="footer-links-list">
+        <a href="files/Yenny-CV-ENGLISH.pdf" target="_blank" rel="noopener">CV</a>
+        <a href="about.html">About</a>
+        <span>Behance (Not yet)</span>
+      </div>
+    </div>
+
+    <div class="footer-skills">
+      <div class="footer-skill-col" data-reveal data-delay="1">
+        <h4>Instruments</h4>
+        <ul><li>Figma</li><li>Cursor</li><li>Claude</li><li>Readymag</li><li>Framer</li><li>Illustrator</li></ul>
+      </div>
+      <div class="footer-skill-col" data-reveal data-delay="2">
+        <h4>Hard Skills</h4>
+        <ul><li>AI-Assisted Design</li><li>UX Research</li><li>UI Design</li><li>Web Design</li><li>Copywriting</li></ul>
+      </div>
+      <div class="footer-skill-col" data-reveal data-delay="3">
+        <h4>Soft Skills</h4>
+        <ul><li>Management</li><li>Presentation Skills</li><li>Multilingual</li><li>Teamwork</li><li>Multicultural</li></ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-base">
+    <span>© 2026 Yenny Rong</span>
+    <a href="#main">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var burger  = document.getElementById('nav-burger');
+  var overlay = document.getElementById('nav-overlay');
+  if (burger && overlay) {
+    var setMenu = function (open) {
+      burger.classList.toggle('is-open', open);
+      overlay.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', open);
+    };
+    burger.addEventListener('click', function () { setMenu(!overlay.classList.contains('is-open')); });
+    overlay.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+  }
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* Prototype video: plays while it's on screen, pauses when it isn't. */
+  var vid = document.getElementById('proto-video');
+  if (vid && !reduce && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { vid.play().catch(function () {}); }
+        else { vid.pause(); }
+      });
+    }, { threshold: 0.35 }).observe(vid);
+  }
+
+  var targets = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window) || reduce) {
+    targets.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.08, rootMargin: '0px 0px -6% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+
+<script src="js/trail.js"></script>
+
+</body>
+</html>

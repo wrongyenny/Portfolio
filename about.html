@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>About — Yenny.Design</title>
+<meta name="description" content="Yenny Rong — product designer for AI-driven fintech. Business student turned UX researcher turned product designer." />
+<meta name="theme-color" content="#f4fafd" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="icon" href="img/icon/icon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="img/icon/apple-touch-icon.png" />
+<link rel="stylesheet" href="css/style.css" />
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   ABOUT — "sky" composition
+   Same gradient discipline as the rest of the site: one very large
+   ellipse spilling past every edge, a horizon wash from below, and
+   every outer stop fading to a *tinted* zero-alpha colour so there
+   is never a grey rim.
+═══════════════════════════════════════════════════════════════ */
+
+body { background: #f4fafd; }
+
+.sky {
+  position: relative;
+  isolation: isolate;
+  padding: calc(var(--header-h) + var(--space-8)) 0 var(--space-9);
+  /* Deliberately NOT clipped. Clipping cut the sky's soft bottom edge into a
+     visible horizontal seam where the section ends; letting it bleed puts the
+     zero-alpha rim in open space instead. Horizontal spill is already handled
+     by `overflow-x: clip` on <html>. */
+}
+
+/* Anchored into the top-left corner rather than washed across the whole
+   section — it should read as light coming in from one corner, not as a
+   blue panel behind the page. */
+.sky::before {
+  content: '';
+  position: absolute;
+  z-index: -3;
+  left: 0;
+  top: 0;
+  translate: -32% -38%;
+  width:  max(92%, 88vw);
+  height: max(92%, 82vh);
+  pointer-events: none;
+  background: radial-gradient(ellipse 52% 52% at var(--sky-x, 50%) var(--sky-y, 50%),
+    rgba(122, 198, 240, 0.94)  0%,
+    rgba(134, 205, 243, 0.86) 14%,
+    rgba(152, 214, 246, 0.72) 27%,
+    rgba(172, 223, 248, 0.55) 40%,
+    rgba(192, 231, 249, 0.39) 53%,
+    rgba(210, 238, 250, 0.25) 66%,
+    rgba(224, 243, 251, 0.13) 79%,
+    rgba(236, 248, 252, 0.05) 90%,
+    rgba(236, 248, 252, 0)   100%
+  );
+  transition: transform 1000ms var(--ease-out);
+}
+
+/* One soft cloud drifting inside the corner light */
+.cloud {
+  position: absolute;
+  z-index: -2;
+  border-radius: 50%;
+  pointer-events: none;
+  background: radial-gradient(circle closest-side,
+    rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.40) 42%,
+    rgba(255,255,255,0.16) 68%, rgba(255,255,255,0) 100%);
+  filter: blur(6px);
+}
+.cloud--a {
+  top: 12%; left: -8%;
+  width: clamp(280px, 38vw, 620px); height: clamp(150px, 20vw, 320px);
+  animation: drift-a 34s ease-in-out infinite alternate;
+}
+@keyframes drift-a { from { transform: translate3d(0,0,0); } to { transform: translate3d(70px,-26px,0); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud { animation: none; }
+  .sky::before { transition: none; }
+}
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--container-narrow) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ── Masthead ─────────────────────────────────────────────── */
+
+.about-kicker {
+  font-size: var(--text-sm);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #2f6a86;
+}
+
+.about-title {
+  margin-top: var(--space-5);
+  font-family: var(--font-script);
+  font-size: clamp(28px, 3.6vw + 10px, 58px);
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+  color: #10262f;
+  max-width: 18ch;
+  text-wrap: balance;
+}
+
+.about-status {
+  margin-top: var(--space-6);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(16, 38, 47, 0.14);
+  font-size: var(--text-sm);
+  color: #10262f;
+}
+.about-status i {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: #1f9d55;
+  animation: pulse 2.6s ease-in-out infinite;
+}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+/* ── Bio + portrait ───────────────────────────────────────── */
+
+.bio {
+  margin-top: var(--space-10);
+  display: grid;
+  grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+  gap: var(--space-9);
+  align-items: start;
+}
+
+.portrait {
+  position: relative;
+  aspect-ratio: 374 / 553;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: #0f1c22;
+  box-shadow: 0 22px 60px rgba(18, 62, 84, 0.26);
+}
+.portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.portrait .plate {
+  z-index: 2;
+  image-rendering: pixelated;      /* smoothing the dither defeats the effect */
+  transition: opacity 1100ms var(--ease-out);
+}
+.portrait .real { z-index: 1; transform: scale(1.02); transition: transform 1400ms var(--ease-out); }
+.portrait:hover .plate, .portrait:focus-within .plate { opacity: 0; }
+.portrait:hover .real { transform: scale(1); }
+@media (prefers-reduced-motion: reduce) {
+  .portrait .plate { transition-duration: 1ms; }
+  .portrait .real { transition: none; transform: none; }
+}
+
+.bio-text { display: flex; flex-direction: column; gap: var(--space-5); }
+.bio-text p {
+  font-size: var(--text-md);
+  line-height: var(--leading-body);
+  color: #1c3b47;
+  max-width: 56ch;
+}
+.bio-text .lead {
+  font-size: var(--text-lg);
+  font-weight: 400;
+  line-height: 1.5;
+  color: #10262f;
+  max-width: 34ch;
+}
+
+/* ── Facts strip ──────────────────────────────────────────── */
+
+.facts {
+  margin-top: var(--space-9);
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(16, 38, 47, 0.16);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-6);
+}
+.fact { display: flex; flex-direction: column; gap: 6px; }
+.fact dt {
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #46707f;
+}
+.fact dd { font-size: var(--text-base); color: #10262f; line-height: 1.5; }
+
+/* ── CV ───────────────────────────────────────────────────── */
+
+.cv { padding-block: var(--space-9) var(--space-10); }
+
+.cv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-9) var(--space-8);
+}
+
+.cv-col h2 {
+  font-family: var(--font-script);
+  font-size: clamp(18px, 1.4vw + 10px, 26px);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+  color: var(--color-ink-strong);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.cv-list { margin-top: var(--space-2); }
+
+.cv-item {
+  position: relative;
+  padding: var(--space-5) 0 var(--space-5) var(--space-6);
+  border-bottom: 1px solid var(--color-line);
+}
+.cv-item::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: calc(var(--space-5) + 0.55em);
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: rgba(31, 31, 31, 0.28);
+  transition: background var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.cv-item:hover::before { background: #2f8fc4; transform: scale(1.5); }
+.cv-item.is-current::before { background: #1f9d55; }
+
+.cv-org {
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-ink-strong);
+}
+.cv-role { margin-top: 3px; font-size: var(--text-sm); color: var(--color-ink); }
+.cv-year { margin-top: 6px; font-size: var(--text-xs); color: var(--color-ink-soft); letter-spacing: 0.06em; }
+
+.cv-award .cv-org { color: #8a5a12; }
+.cv-award::before { background: rgba(212, 160, 40, 0.75); }
+
+/* ── Responsive ───────────────────────────────────────────── */
+
+@media (max-width: 820px) {
+  .bio { grid-template-columns: minmax(0, 1fr); gap: var(--space-8); }
+  .portrait { width: min(280px, 68vw); }
+}
+@media (max-width: 700px) {
+  .about-title { max-width: none; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="nav-sticky-wrap nav-sticky-wrap--ghost" id="header">
+  <nav class="nav" aria-label="Main">
+    <a href="index.html" class="nav-logo" aria-label="Yenny.Design — home">
+      <img src="img/logo.svg" alt="Yenny.Design" width="1067" height="261" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html" aria-current="page">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</div>
+
+<div class="nav-overlay" id="nav-overlay">
+  <a href="projects.html">Projects</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main id="main">
+
+  <!-- ══════════ SKY ══════════ -->
+  <section class="sky" aria-labelledby="about-title">
+    <span class="cloud cloud--a" aria-hidden="true"></span>
+
+    <div class="wrap">
+
+      <p class="about-kicker" data-reveal>About</p>
+
+      <p class="about-status" data-reveal data-delay="1">
+        <i aria-hidden="true"></i> Product Designer at BAC Latam
+      </p>
+
+      <div class="bio">
+        <figure class="portrait" data-reveal="left" data-delay="2" tabindex="0">
+          <img class="real"  src="img/thumbs/about.jpg" alt="Yenny Rong" loading="lazy" />
+          <img class="plate" src="img/thumbs/about-pixel.png" alt="" aria-hidden="true" loading="lazy" />
+        </figure>
+
+        <div class="bio-text" data-reveal="right" data-delay="3">
+          <!-- Carries the page's h1 now that the display title is gone, so the
+               document still has one real heading. -->
+          <h1 class="lead" id="about-title">
+            I'm Yenny Rong.
+          </h1>
+          <p>
+            I came to design sideways. I was a business student, and in my third
+            year I started designing in my internship. It went well enough that
+            I did a master's in User Experience and Digital Service Design.
+          </p>
+          <p>
+            UX research became my favorite part of the design process. These days
+            I work on AI-driven fintech, where the hard part isn't drawing the
+            screen — it's making something genuinely complicated feel obvious to
+            someone who just wants their money to behave.
+          </p>
+          <p>
+            I love speaking to people, although I'm an introvert. Getting to know
+            someone's perspective and actually listening to their opinion is what
+            drives me to design a better experience in every product.
+          </p>
+        </div>
+      </div>
+
+      <dl class="facts" data-reveal data-delay="4">
+        <div class="fact"><dt>Based in</dt><dd>Barcelona, Spain</dd></div>
+        <div class="fact"><dt>From</dt><dd>Costa Rica</dd></div>
+        <div class="fact"><dt>Designing for</dt><dd>5 years</dd></div>
+        <div class="fact"><dt>Studied</dt><dd>UX &amp; Digital Service Design, ELISAVA</dd></div>
+      </dl>
+
+    </div>
+  </section>
+
+  <!-- ══════════ CV ══════════ -->
+  <section class="cv" aria-label="Experience, education and honours">
+    <div class="wrap">
+      <div class="cv-grid">
+
+        <div class="cv-col" data-reveal>
+          <h2>Work</h2>
+          <div class="cv-list">
+            <div class="cv-item is-current">
+              <p class="cv-org">BAC Latam</p>
+              <p class="cv-role">Product Designer</p>
+              <p class="cv-year">2025 — Present</p>
+            </div>
+            <div class="cv-item">
+              <p class="cv-org">Weecover</p>
+              <p class="cv-role">UX/UI Designer</p>
+              <p class="cv-year">2025</p>
+            </div>
+            <div class="cv-item">
+              <p class="cv-org">REVOLVE</p>
+              <p class="cv-role">Product Designer</p>
+              <p class="cv-year">2023 — 2025</p>
+            </div>
+            <div class="cv-item">
+              <p class="cv-org">Florasis Cosmetics</p>
+              <p class="cv-role">Copywriter</p>
+              <p class="cv-year">2021 — 2022</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cv-col" data-reveal data-delay="1">
+          <h2>Education</h2>
+          <div class="cv-list">
+            <div class="cv-item">
+              <p class="cv-org">ELISAVA</p>
+              <p class="cv-role">MA, UX and Digital Service Design</p>
+              <p class="cv-year">2022 — 2023</p>
+            </div>
+            <div class="cv-item">
+              <p class="cv-org">Shenzhen University</p>
+              <p class="cv-role">BA, Business Management</p>
+              <p class="cv-year">2018 — 2022</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="cv-col" data-reveal data-delay="2">
+          <h2>Honours</h2>
+          <div class="cv-list">
+            <div class="cv-item cv-award">
+              <p class="cv-org">LAUS Award — Platinum</p>
+              <p class="cv-role">Project “Re·do”</p>
+            </div>
+            <div class="cv-item cv-award">
+              <p class="cv-org">Masters Award</p>
+              <p class="cv-role">Project “Re·do”</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-bg" aria-hidden="true"></div>
+  <div class="footer-inner">
+
+    <div class="footer-col-left" data-reveal>
+      <p class="footer-heading">Let's create</p>
+      <div class="footer-contact">
+        <a href="mailto:rong.yenny@gmail.com">Email</a>
+        <a href="https://instagram.com/yennyrong" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@yennyrong" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://www.linkedin.com/in/yennyrong" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="footer-links-list">
+        <a href="files/Yenny-CV-ENGLISH.pdf" target="_blank" rel="noopener">CV</a>
+        <a href="contact.html">Contact</a>
+        <span>Behance (Not yet)</span>
+      </div>
+    </div>
+
+    <div class="footer-skills">
+      <div class="footer-skill-col" data-reveal data-delay="1">
+        <h4>Instruments</h4>
+        <ul><li>Figma</li><li>Cursor</li><li>Claude</li><li>Readymag</li><li>Framer</li><li>Illustrator</li></ul>
+      </div>
+      <div class="footer-skill-col" data-reveal data-delay="2">
+        <h4>Hard Skills</h4>
+        <ul><li>AI-Assisted Design</li><li>UX Research</li><li>UI Design</li><li>Web Design</li><li>Copywriting</li></ul>
+      </div>
+      <div class="footer-skill-col" data-reveal data-delay="3">
+        <h4>Soft Skills</h4>
+        <ul><li>Management</li><li>Presentation Skills</li><li>Multilingual</li><li>Teamwork</li><li>Multicultural</li></ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-base">
+    <span>© 2026 Yenny Rong</span>
+    <a href="#main">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Mobile menu ─────────────────────────────────────────── */
+  var burger  = document.getElementById('nav-burger');
+  var overlay = document.getElementById('nav-overlay');
+  if (burger && overlay) {
+    var setMenu = function (open) {
+      burger.classList.toggle('is-open', open);
+      overlay.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', open);
+    };
+    burger.addEventListener('click', function () { setMenu(!overlay.classList.contains('is-open')); });
+    overlay.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+  }
+
+  /* ── Header goes solid once you scroll off the gradient ──── */
+  var header = document.getElementById('header');
+  var onScroll = function () { header.classList.toggle('is-stuck', (window.scrollY || 0) > 40); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── The sky drifts with the pointer ─────────────────────── */
+  var sky = document.querySelector('.sky');
+  if (sky && !reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var pending = false, px = 0, py = 0;
+    window.addEventListener('pointermove', function (e) {
+      px = e.clientX / window.innerWidth  - 0.5;
+      py = e.clientY / window.innerHeight - 0.5;
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        sky.style.setProperty('--sky-x', (42 + px * 8) + '%');
+        sky.style.setProperty('--sky-y', (46 + py * 7) + '%');
+      });
+    }, { passive: true });
+  }
+
+  /* ── Scroll reveal ───────────────────────────────────────── */
+  var targets = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window) || reduce) {
+    targets.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+
+<script src="js/trail.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects — Yenny.Design</title>
+  <link rel="icon" href="img/icon/icon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="img/icon/apple-touch-icon.png" />
+<link rel="stylesheet" href="css/style.css" />
+  <style>
+
+    .projects-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px var(--pad-h) 0;
+    }
+
+    .projects-heading {
+      font-family: var(--font-script);
+      font-size: clamp(24px, 2.2vw + 15px, 44px);
+      color: var(--color-text);
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+      margin-bottom: clamp(32px, 4vw, 56px);
+    }
+
+    /* Grid: 2 columns on desktop, 1 on mobile */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .project-card {
+      display: block;
+      text-decoration: none;
+      border-radius: 18px;
+      overflow: hidden;
+      background: #f0ece8;
+      box-shadow: 0 6px 28px rgba(0, 0, 0, 0.13);
+      transition: box-shadow 0.3s ease, opacity 0.25s ease;
+    }
+
+    .project-card:hover {
+      box-shadow: 0 12px 48px rgba(0, 0, 0, 0.22);
+    }
+
+    /* Image area */
+    .project-card-img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Placeholder when no image yet */
+    .project-card-placeholder {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #d9d9d9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      color: #888;
+      letter-spacing: -0.42px;
+    }
+
+    /* Card info below image */
+    .project-card-info {
+      padding: 14px 20px 18px;
+      background: white;
+    }
+
+    .project-card-label {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: #999;
+      letter-spacing: -0.4px;
+      line-height: 1.5;
+      margin-bottom: 3px;
+    }
+
+    .project-card-title {
+      display: block;
+      font-family: var(--font-script);
+      font-size: clamp(14px, 1.4vw, 20px);
+      color: #1a1a1a;
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+    }
+
+    /* 768px: single column */
+    @media (max-width: 768px) {
+      .projects-grid { grid-template-columns: 1fr; gap: 16px; }
+    }
+  </style>
+
+  <style>
+    /* ── Scroll reveal ── */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    [data-reveal="left"]  { transform: translateX(-32px); }
+    [data-reveal="right"] { transform: translateX(32px); }
+    [data-reveal].is-visible { opacity: 1; transform: none; }
+    [data-reveal][data-delay="1"] { transition-delay: 0.09s; }
+    [data-reveal][data-delay="2"] { transition-delay: 0.18s; }
+    [data-reveal][data-delay="3"] { transition-delay: 0.27s; }
+    [data-reveal][data-delay="4"] { transition-delay: 0.36s; }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <div class="nav-sticky-wrap"><nav class="nav">
+    <a href="index.html" class="nav-logo">
+      <img src="img/logo.svg" alt="Yenny.Design" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav></div>
+<!-- Mobile menu overlay -->
+<div class="nav-overlay" id="nav-overlay">
+  <a href="projects.html">Projects</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+<script>
+  (function(){
+    var burger=document.getElementById('nav-burger');
+    var overlay=document.getElementById('nav-overlay');
+    if(!burger||!overlay) return;
+    burger.addEventListener('click',function(){
+      burger.classList.toggle('is-open');
+      overlay.classList.toggle('is-open');
+      document.body.style.overflow=overlay.classList.contains('is-open')?'hidden':'';
+    });
+    overlay.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){
+        burger.classList.remove('is-open');
+        overlay.classList.remove('is-open');
+        document.body.style.overflow='';
+      });
+    });
+  })();
+</script>
+
+  <!-- Projects grid -->
+  <section class="projects-section">
+    <p class="projects-heading">Work</p>
+
+    <div class="projects-grid">
+
+      <a href="work-qapp.html" class="project-card">
+        <img class="project-card-img" src="img/thumbs/qapp.jpg" alt="Q App" />
+        <div class="project-card-info">
+          <p class="project-card-label">Mobile App · 2025</p>
+          <p class="project-card-title">Q App</p>
+        </div>
+      </a>
+
+      <a href="work-redo.html" class="project-card">
+        <img class="project-card-img" src="img/redo/hero.webp" alt="Re·do" />
+        <div class="project-card-info">
+          <p class="project-card-label">Mobile App · 2024</p>
+          <p class="project-card-title">Re·do</p>
+        </div>
+      </a>
+
+      <a href="work-curiosoil.html" class="project-card">
+        <img class="project-card-img" src="img/curiosoil/3.webp" alt="Curiosoil" />
+        <div class="project-card-info">
+          <p class="project-card-label">Web Design · 2024</p>
+          <p class="project-card-title">Curiosoil</p>
+        </div>
+      </a>
+
+      <a href="work-letterboxd.html" class="project-card">
+        <img class="project-card-img" src="img/thumbs/letterboxd.jpg" alt="Letterboxd App Case Study" loading="lazy" />
+        <div class="project-card-info">
+          <p class="project-card-label">UX/UI · Personal · 2025</p>
+          <p class="project-card-title">Letterboxd App Case Study</p>
+        </div>
+      </a>
+
+      <a href="work-insights.html" class="project-card">
+        <img class="project-card-img" src="img/insights/dashboard.webp" alt="Weecover Insights" />
+        <div class="project-card-info">
+          <p class="project-card-label">Web App · 2025</p>
+          <p class="project-card-title">Insights.</p>
+        </div>
+      </a>
+
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-bg"></div>
+    <div class="footer-inner">
+
+      <div class="footer-col-left">
+        <p class="footer-heading">Let's create</p>
+        <div class="footer-contact">
+        <a href="mailto:rong.yenny@gmail.com">Email</a>
+        <a href="https://instagram.com/yennyrong" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@yennyrong" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://www.linkedin.com/in/yennyrong" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+        <div class="footer-links-list">
+          <a href="files/Yenny-CV-ENGLISH.pdf" target="_blank">CV</a>
+          <a href="about.html">About</a>
+          <span>Behance (Not yet)</span>
+        </div>
+      </div>
+
+      <div class="footer-skills">
+        <div class="footer-skill-col">
+          <h4>Instruments</h4>
+          <ul>
+            <li>Figma</li><li>Cursor</li><li>Claude</li>
+            <li>Readymag</li><li>Framer</li><li>Illustrator</li>
+          </ul>
+        </div>
+        <div class="footer-skill-col">
+          <h4>Hard Skills</h4>
+          <ul>
+            <li>AI-Assisted Design</li><li>UX Research</li>
+            <li>UI Design</li><li>Web Design</li><li>Copywriting</li>
+          </ul>
+        </div>
+        <div class="footer-skill-col">
+          <h4>Soft Skills</h4>
+          <ul>
+            <li>Management</li><li>Presentation Skills</li>
+            <li>Multilingual</li><li>Teamwork</li><li>Multicultural</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <script>
+    /* ── Scroll reveal — auto-target ── */
+    (function () {
+      const SELECTORS = [
+        '.case-header',
+        '.case-meta',
+        '.case-hero-img',
+        '.case-section',
+        '.case-img-full',
+        '.case-img-duo',
+        '.case-img-trio',
+        '.case-stats',
+        '.case-next',
+        '.case-video',
+        '.mockup-stage',
+        '.mockup-grid-2',
+        '.mockup-offset',
+        '.projects-heading',
+        '.project-card',
+        '.footer-col-left',
+        '.footer-skill-col',
+        '.footer-links-list',
+      ];
+
+      document.querySelectorAll(SELECTORS.join(',')).forEach(el => {
+        el.setAttribute('data-reveal', 'up');
+      });
+
+      /* stagger project-card siblings */
+      document.querySelectorAll('.projects-grid, .works-stage').forEach(grid => {
+        grid.querySelectorAll('.project-card, .work-card').forEach((card, i) => {
+          if (i > 0 && i <= 4) card.setAttribute('data-delay', String(i));
+        });
+      });
+
+      /* stagger case-section siblings */
+      document.querySelectorAll('.case-section').forEach((el, i) => {
+        // no stagger needed between sections — each triggers individually
+      });
+
+      /* stagger footer skill cols */
+      document.querySelectorAll('.footer-skill-col').forEach((el, i) => {
+        el.setAttribute('data-delay', String(i + 1));
+      });
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('is-visible');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+    })();
+  </script>
+  <script src="js/trail.js"></script>
+</body>
+</html>

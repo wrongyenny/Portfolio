@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Yenny.Design — AI Product Designer for Fintech</title>
+<meta name="description" content="Yenny Rong — AI Product Designer for fintech. Intuitive, human-centered interfaces for AI-driven financial products." />
+<meta name="theme-color" content="#faf8f5" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="icon" href="img/icon/icon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="img/icon/apple-touch-icon.png" />
+<link rel="stylesheet" href="css/style.css" />
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   LANDING PAGE
+   Sections: hero → intro → selected work → footer
+   Gradients are pure CSS, sampled stop-for-stop from the Figma
+   source images, and every outer stop fades to a *tinted* zero-
+   alpha colour (never `transparent`) so there is no grey halo.
+═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. HERO ─────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: calc(var(--header-h) + var(--space-8)) var(--gutter) var(--space-10);
+  overflow: clip;
+}
+
+/* Pink band — vertical gradient, peak aligned with the wordmark */
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0 -10%;
+  z-index: -1;
+  pointer-events: none;
+  /* The page colour is painted *into* this layer rather than showing
+     through it. `.hero` is an isolated stacking context, so a blend-mode
+     child can only mix with what is painted inside it — against a
+     semi-transparent gradient there is almost nothing to mix with, and the
+     cursor glow came out invisible. Opaque here, identical on screen. */
+  background-color: var(--color-bg);
+  background-image: linear-gradient(180deg,
+    rgba(var(--pink), 0)     0%,
+    rgba(var(--pink), 0.02)  5%,
+    rgba(var(--pink), 0.11)  10%,
+    rgba(var(--pink), 0.25)  15%,
+    rgba(var(--pink), 0.39)  20%,
+    rgba(var(--pink), 0.58)  25%,
+    rgba(var(--pink), 0.72)  30%,
+    rgba(var(--pink), 0.86)  35%,
+    rgba(var(--pink), 0.90)  40%,
+    rgba(var(--pink), 0.95)  45%,
+    rgba(var(--pink), 1)     50%,
+    rgba(var(--pink), 0.95)  55%,
+    rgba(var(--pink), 0.90)  60%,
+    rgba(var(--pink), 0.77)  65%,
+    rgba(var(--pink), 0.61)  70%,
+    rgba(var(--pink), 0.46)  75%,
+    rgba(var(--pink), 0.30)  80%,
+    rgba(var(--pink), 0.18)  85%,
+    rgba(var(--pink), 0.07)  90%,
+    rgba(var(--pink), 0.02)  95%,
+    rgba(var(--pink), 0)     100%
+  );
+}
+
+/* The wordmark block: everything in the hero is positioned off it,
+   so the three elements can never collide at any viewport size. */
+.hero-mark {
+  position: relative;
+  width: min(72vw, 1000px);
+  aspect-ratio: 1067 / 261;
+  margin-block: clamp(28px, 5vh, 64px);
+}
+
+.hero-mark img { width: 100%; height: 100%; }
+
+.hero-eyebrow,
+.hero-tagline {
+  position: absolute;
+  font-size: clamp(12px, 1.15vw, 18px);
+  line-height: 1.3;
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+.hero-eyebrow {
+  left: 4%;
+  bottom: calc(100% + 0.5em);
+  font-style: italic;
+}
+
+.hero-tagline {
+  right: 0;
+  top: calc(100% + 0.7em);
+  font-weight: 700;
+  text-align: right;
+}
+
+/* Scroll cue */
+.hero-cue {
+  position: absolute;
+  left: 50%;
+  bottom: clamp(20px, 4vh, 42px);
+  translate: -50% 0;
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  font-size: var(--text-xs);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(31, 31, 31, 0.55);
+}
+.hero-cue::after {
+  content: '';
+  width: 1px;
+  height: clamp(24px, 4vh, 40px);
+  background: linear-gradient(180deg, rgba(31,31,31,0.5), rgba(31,31,31,0));
+  animation: cue 2.4s var(--ease-out) infinite;
+  transform-origin: top;
+}
+@keyframes cue {
+  0%, 100% { transform: scaleY(0.4); opacity: 0.3; }
+  45%      { transform: scaleY(1);   opacity: 1; }
+}
+
+/* ── The wordmark that flies from hero into the header ───────── */
+
+#flying-logo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 250;
+  display: block;
+  will-change: transform, width;
+}
+#flying-logo img { width: 100%; height: auto; }
+
+/* With JS on, the in-flow copies only reserve space */
+.js .hero-mark img,
+.js .nav-logo img { visibility: hidden; }
+/* Without JS, no flying logo is inserted and both copies show */
+html:not(.js) #flying-logo { display: none; }
+
+/* ── 2. INTRO ────────────────────────────────────────────────── */
+
+.intro {
+  position: relative;
+  isolation: isolate;
+  padding-block: var(--space-12);
+  /* Deliberately NOT clipped: the glow has to bleed past the section so
+     its zero-alpha rim lands in open cream instead of on a hard edge. */
+}
+
+/* Purple glow — elliptical, colour path sampled from Figma, with a
+   widened dark core so the bio always clears contrast on it. */
+.intro::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  translate: -50% -50%;
+  width:  max(min(1900px, 152vw), 108%);
+  height: max(min(1380px, 110vw), 116%);
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%,
+    rgba(23, 0, 16, 0.985)  0%,
+    rgba(23, 0, 16, 0.975)  22%,
+    rgba(22, 0, 16, 0.955)  30%,
+    rgba(18, 0, 20, 0.925)  36%,
+    rgba(21, 0, 26, 0.870)  42%,
+    rgba(24, 0, 34, 0.790)  48%,
+    rgba(34, 0, 36, 0.710)  53%,
+    rgba(46, 0, 35, 0.620)  58%,
+    rgba(63, 0, 32, 0.530)  63%,
+    rgba(92, 0, 31, 0.450)  68%,
+    rgba(110, 0, 25, 0.365) 72%,
+    rgba(108, 0, 24, 0.300) 76%,
+    rgba(108, 0, 27, 0.250) 80%,
+    rgba(105, 0, 24, 0.200) 84%,
+    rgba(105, 0, 21, 0.150) 88%,
+    rgba(112, 0, 26, 0.100) 91%,
+    rgba(118, 0, 22, 0.068) 94%,
+    rgba(120, 0, 28, 0.030) 97%,
+    rgba(120, 0, 30, 0)     100%
+  );
+}
+
+.intro-inner {
+  width: 100%;
+  max-width: calc(980px + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+  display: grid;
+  grid-template-columns: minmax(0, 320px) minmax(0, 440px);
+  gap: var(--space-9);
+  align-items: center;
+  justify-content: center;
+}
+
+.intro-photo {
+  position: relative;
+  aspect-ratio: 374 / 553;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: #1a0a18;
+  box-shadow: var(--shadow-lift);
+}
+
+.intro-photo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Dithered plate sits on top and dissolves on hover to reveal the photo
+   underneath. `image-rendering: pixelated` keeps the dither crisp when the
+   561px source is scaled up — smoothing it would defeat the whole effect. */
+.intro-photo .plate {
+  z-index: 2;
+  image-rendering: pixelated;
+  transition: opacity 1100ms var(--ease-out);
+}
+.intro-photo .real {
+  z-index: 1;
+  transform: scale(1.02);
+  transition: transform 1400ms var(--ease-out);
+}
+.intro-photo:hover .plate,
+.intro-photo:focus-within .plate { opacity: 0; }
+.intro-photo:hover .real { transform: scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-photo .plate { transition-duration: 1ms; }
+  .intro-photo .real  { transition: none; transform: none; }
+}
+
+.intro-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  color: #fff;
+  text-shadow: 0 1px 22px rgba(10, 0, 8, 0.55);
+}
+.intro-text p { font-size: var(--text-base); line-height: var(--leading-body); }
+
+/* ── 3. SELECTED WORK ────────────────────────────────────────── */
+
+.works { padding-block: var(--space-11) var(--space-8); }
+
+.works-title {
+  font-family: var(--font-script);
+  /* Matches the footer's "Let's create" heading exactly — including the
+     weight, which an <h2> would otherwise default to bold. */
+  font-size: clamp(30px, 3.4vw, 54px);
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  text-align: center;
+  color: var(--color-ink-strong);
+  padding-inline: var(--gutter);
+}
+.works-title .sparkle {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.42em;
+  vertical-align: 0.5em;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+
+.works-stage {
+  position: relative;
+  width: min(100% - var(--gutter) * 2, var(--container));
+  margin: var(--space-9) auto 0;
+}
+
+/* ·· Random: an overlapping pile on a fixed-ratio stage, so every
+      position scales proportionally at any width ·· */
+.works-stage.is-random {
+  aspect-ratio: 2.25;
+  min-height: 320px;
+}
+.works-stage.is-random .work-card {
+  position: absolute;
+  margin: 0;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  /* These are anchors wrapping images — both are natively draggable, and
+     the browser's own drag-and-drop steals the gesture a few pixels in. */
+  -webkit-user-drag: none;
+}
+.works-stage.is-random .work-card img { -webkit-user-drag: none; }
+.works-stage.is-random .work-card:active { cursor: grabbing; }
+/* Captions can't sit below the cards in a pile — whatever is stacked on
+   top would bury them — so they become a scrim overlay revealed on hover,
+   which also keeps card height exactly equal to image height. */
+.works-stage.is-random .work-card-info {
+  position: absolute;
+  inset: auto 0 0 0;
+  margin: 0;
+  padding: 28px 16px 13px;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  background: linear-gradient(180deg,
+    rgba(16, 3, 14, 0)    0%,
+    rgba(16, 3, 14, 0.72) 45%,
+    rgba(16, 3, 14, 0.92) 100%);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--dur-base) var(--ease-out),
+              transform var(--dur-base) var(--ease-out);
+  pointer-events: none;
+}
+.works-stage.is-random .work-card:hover  .work-card-info,
+.works-stage.is-random .work-card:focus-visible .work-card-info {
+  opacity: 1;
+  transform: none;
+}
+.works-stage.is-random .work-card-label { color: rgba(255, 255, 255, 0.7); }
+.works-stage.is-random .work-card-title { color: #fff; }
+
+/* Hovering or grabbing lifts a card out of the pile */
+.works-stage.is-random .work-card:hover,
+.works-stage.is-random .work-card:focus-visible { z-index: 30; }
+
+/* Widths are the previous set +15%; the stage was made proportionally
+   taller (2.4 → 2.25) so nothing runs off the bottom. */
+.works-stage.is-random .c1 { left: 18%; top: 34%; width: 23%;    z-index: 4; }
+.works-stage.is-random .c2 { left: 30%; top: 12%; width: 27.6%;  z-index: 3; }
+.works-stage.is-random .c3 { left: 50%; top: 4%;  width: 17.25%; z-index: 1; }
+.works-stage.is-random .c4 { left: 26%; top: 55%; width: 24.15%; z-index: 5; }
+.works-stage.is-random .c5 { left: 62%; top: 28%; width: 19.55%; z-index: 2; }
+
+.works-stage.is-random .c1 .work-card-img { aspect-ratio: 4 / 3; }
+.works-stage.is-random .c2 .work-card-img { aspect-ratio: 3 / 2; }
+.works-stage.is-random .c3 .work-card-img { aspect-ratio: 3 / 4; }
+.works-stage.is-random .c4 .work-card-img { aspect-ratio: 4 / 3; }
+.works-stage.is-random .c5 .work-card-img { aspect-ratio: 3 / 4; }
+
+/* ·· Tidy: an honest three-column grid ·· */
+.works-stage.is-tidy {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-6) var(--space-5);
+  aspect-ratio: auto;
+  min-height: 0;
+}
+.works-stage.is-tidy .work-card { position: relative; width: 100%; }
+
+/* ·· Card ·· */
+.work-card {
+  display: block;
+  transition: transform var(--dur-base) var(--ease-out),
+              opacity var(--dur-base) var(--ease-out);
+}
+.work-card:hover { transform: translateY(-6px); }
+
+.work-card-img {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: #ece7e2;
+  box-shadow: var(--shadow-card);
+  transition: box-shadow var(--dur-base) var(--ease-out);
+}
+.work-card:hover .work-card-img { box-shadow: var(--shadow-lift); }
+
+.work-card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.work-card:hover .work-card-img img { transform: scale(1.05); }
+
+.work-card-info { margin-top: var(--space-3); }
+
+.work-card-label {
+  display: block;
+  font-size: var(--text-xs);
+  color: var(--color-ink-soft);
+  margin-bottom: 2px;
+}
+
+/* Mono, not script: the script face is a display voice and turns to mush
+   below ~40px. It stays on the section heading and "Let's create". */
+.work-card-title {
+  display: block;
+  font-size: var(--text-md);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-ink-strong);
+}
+
+/* ·· Controls ·· */
+.works-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-5) var(--space-8);
+  margin-top: var(--space-9);
+  padding-inline: var(--gutter);
+}
+
+.works-toggle-wrap { display: flex; align-items: center; gap: var(--space-4); }
+
+.toggle-label {
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.toggle-label.is-active { color: var(--color-ink-strong); font-weight: 700; }
+
+.toggle-btn {
+  width: 54px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--color-ink-strong);
+  position: relative;
+  flex-shrink: 0;
+}
+.toggle-knob {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.toggle-btn[aria-checked="true"] .toggle-knob { transform: translateX(26px); }
+
+.works-view-all {
+  font-size: var(--text-sm);
+  color: var(--color-ink-soft);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+.works-view-all:hover { color: var(--color-ink-strong); }
+.works-view-all span {
+  display: inline-block;
+  transition: transform var(--dur-base) var(--ease-out);
+}
+.works-view-all:hover span { transform: translateX(5px); }
+
+/* ── 4. RESPONSIVE ───────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .works-stage.is-random { aspect-ratio: 2.1; }
+}
+
+@media (max-width: 900px) {
+  .intro-inner {
+    grid-template-columns: minmax(0, 420px);
+    justify-items: center;
+    text-align: center;
+    gap: var(--space-8);
+  }
+  .intro-photo { width: min(300px, 72vw); aspect-ratio: 374 / 553; }
+  .intro-text  { align-items: center; }
+  .works-stage.is-tidy { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* Below the nav breakpoint there isn't room to scatter cards without the
+   captions running into each other — fall back to an honest grid. */
+@media (max-width: 860px) {
+  .works-stage.is-random {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) var(--space-4);
+    aspect-ratio: auto;
+    min-height: 0;
+  }
+  .works-stage.is-random .work-card {
+    position: relative;
+    left: auto; top: auto;
+    width: 100%;
+    cursor: pointer;
+  }
+  /* No hover on touch — captions go back into the flow, always visible */
+  .works-stage.is-random .work-card-info {
+    position: relative;
+    inset: auto;
+    opacity: 1;
+    transform: none;
+    background: none;
+    padding: 0;
+    margin-top: var(--space-3);
+    pointer-events: auto;
+  }
+  .works-stage.is-random .work-card-label { color: var(--color-ink-soft); }
+  .works-stage.is-random .work-card-title { color: var(--color-ink-strong); }
+  .works-stage.is-random .work-card .work-card-img { aspect-ratio: 4 / 3; }
+  .works-toggle-wrap { display: none; }
+  .works-footer { justify-content: center; }
+}
+
+@media (max-width: 700px) {
+  .hero-mark { width: 86vw; }
+  .hero-eyebrow, .hero-tagline { font-size: 11px; }
+  .hero-tagline { white-space: normal; max-width: 62%; }
+  .hero-cue { display: none; }
+}
+
+@media (max-width: 460px) {
+  .works-stage.is-random,
+  .works-stage.is-tidy { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ══════════ HEADER ══════════ -->
+<div class="nav-sticky-wrap nav-sticky-wrap--ghost" id="header">
+  <nav class="nav" aria-label="Main">
+    <a href="index.html" class="nav-logo" id="nav-logo" aria-label="Yenny.Design — home">
+      <img src="img/logo.svg" alt="Yenny.Design" width="1067" height="261" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</div>
+
+<div class="nav-overlay" id="nav-overlay">
+  <a href="projects.html">Projects</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main id="main">
+
+  <!-- ══════════ HERO ══════════ -->
+  <section class="hero" aria-labelledby="hero-title">
+    <h1 class="hero-mark" id="hero-title">
+      <span class="hero-eyebrow">Hey, this is</span>
+      <img src="img/logo.svg" alt="Yenny.Design" width="1067" height="261" />
+      <span class="hero-tagline">AI Product Designer for fintech</span>
+    </h1>
+    <span class="hero-cue" aria-hidden="true">Scroll</span>
+  </section>
+
+  <!-- ══════════ INTRO ══════════ -->
+  <section class="intro" aria-label="About Yenny">
+    <div class="intro-inner">
+      <figure class="intro-photo" data-reveal="left" tabindex="0">
+        <img class="real"  src="img/thumbs/about.jpg" alt="Yenny Rong" loading="lazy" />
+        <img class="plate" src="img/thumbs/about-pixel.png" alt="" aria-hidden="true" loading="lazy" />
+      </figure>
+      <div class="intro-text" data-reveal="right">
+        <p>Welcome to my site! I'm Yenny Rong, born and raised in Costa Rica. Growing up I always enjoyed making random stuff with a computer.</p>
+        <p>Been designing digital products for 5 years now. Currently I create intuitive and human-centered interfaces for AI-driven fintech products.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SELECTED WORK ══════════ -->
+  <section class="works" aria-labelledby="works-title">
+
+    <h2 class="works-title" id="works-title" data-reveal>
+      Some of my selected work
+    </h2>
+
+    <div class="works-stage is-random" id="works-stage">
+
+      <a class="work-card c1" href="work-letterboxd.html" data-reveal data-delay="1">
+        <div class="work-card-img"><img src="img/thumbs/letterboxd.jpg" alt="Letterboxd App Case Study" loading="lazy" /></div>
+        <div class="work-card-info">
+          <span class="work-card-label">UX/UI · Personal · 2025</span>
+          <span class="work-card-title">Letterboxd App Case Study</span>
+        </div>
+      </a>
+
+      <a class="work-card c2" href="work-redo.html" data-reveal data-delay="2">
+        <div class="work-card-img"><img src="img/thumbs/redo.jpg" alt="Re·do" loading="lazy" /></div>
+        <div class="work-card-info">
+          <span class="work-card-label">Mobile App · 2024</span>
+          <span class="work-card-title">Re·do</span>
+        </div>
+      </a>
+
+      <a class="work-card c3" href="work-curiosoil.html" data-reveal data-delay="3">
+        <div class="work-card-img"><img src="img/thumbs/curiosoil.jpg" alt="Curiosoil" loading="lazy" /></div>
+        <div class="work-card-info">
+          <span class="work-card-label">Web Design · 2024</span>
+          <span class="work-card-title">Curiosoil</span>
+        </div>
+      </a>
+
+      <a class="work-card c4" href="work-qapp.html" data-reveal data-delay="4">
+        <div class="work-card-img"><img src="img/thumbs/qapp.jpg" alt="Q App" loading="lazy" /></div>
+        <div class="work-card-info">
+          <span class="work-card-label">Mobile App · 2025</span>
+          <span class="work-card-title">Q App</span>
+        </div>
+      </a>
+
+      <a class="work-card c5" href="work-insights.html" data-reveal data-delay="5">
+        <div class="work-card-img"><img src="img/thumbs/insights.jpg" alt="Insights." loading="lazy" /></div>
+        <div class="work-card-info">
+          <span class="work-card-label">Web App · 2025</span>
+          <span class="work-card-title">Insights.</span>
+        </div>
+      </a>
+
+    </div>
+
+    <div class="works-footer" data-reveal>
+      <div class="works-toggle-wrap">
+        <span class="toggle-label is-active" id="label-random">Random</span>
+        <button class="toggle-btn" id="layout-toggle" role="switch" aria-checked="false"
+                aria-label="Switch between scattered and grid layout">
+          <span class="toggle-knob"></span>
+        </button>
+        <span class="toggle-label" id="label-tidy">Tidy</span>
+      </div>
+      <a href="projects.html" class="works-view-all">View all <span>&rarr;</span></a>
+    </div>
+
+  </section>
+</main>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer class="footer">
+  <div class="footer-bg" aria-hidden="true"></div>
+  <div class="footer-inner">
+
+    <div class="footer-col-left" data-reveal>
+      <p class="footer-heading">Let's create</p>
+      <div class="footer-contact">
+        <a href="mailto:rong.yenny@gmail.com">Email</a>
+        <a href="https://instagram.com/yennyrong" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@yennyrong" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://www.linkedin.com/in/yennyrong" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="footer-links-list">
+        <a href="files/Yenny-CV-ENGLISH.pdf" target="_blank" rel="noopener">CV</a>
+        <a href="about.html">About</a>
+        <span>Behance (Not yet)</span>
+      </div>
+    </div>
+
+    <div class="footer-skills">
+      <div class="footer-skill-col" data-reveal data-delay="1">
+        <h4>Instruments</h4>
+        <ul>
+          <li>Figma</li><li>Cursor</li><li>Claude</li>
+          <li>Readymag</li><li>Framer</li><li>Illustrator</li>
+        </ul>
+      </div>
+      <div class="footer-skill-col" data-reveal data-delay="2">
+        <h4>Hard Skills</h4>
+        <ul>
+          <li>AI-Assisted Design</li><li>UX Research</li>
+          <li>UI Design</li><li>Web Design</li><li>Copywriting</li>
+        </ul>
+      </div>
+      <div class="footer-skill-col" data-reveal data-delay="3">
+        <h4>Soft Skills</h4>
+        <ul>
+          <li>Management</li><li>Presentation Skills</li>
+          <li>Multilingual</li><li>Teamwork</li><li>Multicultural</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-base">
+    <span>© 2026 Yenny Rong</span>
+    <a href="#main">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ────────────────────────────────────────────────────────────
+     1. Wordmark flight: hero → header
+     Both endpoints are read from real elements, so the animation
+     stays correct at every breakpoint with nothing hard-coded.
+  ──────────────────────────────────────────────────────────── */
+  var heroMark = document.querySelector('.hero-mark');
+  var navLogo  = document.getElementById('nav-logo');
+  var header   = document.getElementById('header');
+
+  if (heroMark && navLogo) {
+    var flyer = document.createElement('a');
+    flyer.id = 'flying-logo';
+    flyer.href = 'index.html';
+    flyer.setAttribute('aria-hidden', 'true');
+    flyer.setAttribute('tabindex', '-1');
+    flyer.innerHTML = '<img src="img/logo.svg" alt="" width="1067" height="261" />';
+    document.body.appendChild(flyer);
+
+    var from = null, to = null, travel = 1;
+
+    function measure() {
+      var h = heroMark.getBoundingClientRect();
+      var n = navLogo.getBoundingClientRect();
+      var y = window.scrollY || window.pageYOffset;
+      from = { x: h.left, y: h.top + y, w: h.width };
+      /* `from` is document-space (the hero scrolls away); `to` is
+         viewport-space (the header is fixed, so it never moves). */
+      to   = { x: n.left, y: n.top,     w: n.width };
+      travel = Math.max(1, window.innerHeight * 0.62);
+    }
+
+    function ease(t) { return t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2; }
+    function mix(a, b, t) { return a + (b - a) * t; }
+
+    function frame() {
+      if (!from) return;
+      var y = window.scrollY || window.pageYOffset;
+      var p = Math.min(Math.max(y / travel, 0), 1);
+      var e = reduce ? (p > 0.02 ? 1 : 0) : ease(p);
+
+      flyer.style.width = mix(from.w, to.w, e) + 'px';
+      flyer.style.transform =
+        'translate3d(' + mix(from.x, to.x, e) + 'px,' +
+                         mix(from.y - y, to.y, e) + 'px,0)';
+
+      heroMark.style.setProperty('--fade', String(Math.max(1 - p * 2.4, 0)));
+      header.classList.toggle('is-stuck', p > 0.9);
+      ticking = false;
+    }
+
+    var ticking = false;
+    function onScroll() {
+      if (!ticking) { ticking = true; requestAnimationFrame(frame); }
+    }
+
+    measure(); frame();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', function () { measure(); frame(); });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { measure(); frame(); });
+    }
+    window.addEventListener('load', function () { measure(); frame(); });
+  }
+
+  /* Fade the hero's eyebrow + tagline with the same scroll progress */
+  var style = document.createElement('style');
+  style.textContent =
+    '.hero-eyebrow,.hero-tagline{opacity:var(--fade,1);transition:opacity 200ms linear}';
+  document.head.appendChild(style);
+
+  /* ────────────────────────────────────────────────────────────
+     2. Mobile menu
+  ──────────────────────────────────────────────────────────── */
+  var burger  = document.getElementById('nav-burger');
+  var overlay = document.getElementById('nav-overlay');
+  if (burger && overlay) {
+    function setMenu(open) {
+      burger.classList.toggle('is-open', open);
+      overlay.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', open);
+    }
+    burger.addEventListener('click', function () {
+      setMenu(!overlay.classList.contains('is-open'));
+    });
+    overlay.addEventListener('click', function (e) {
+      if (e.target.tagName === 'A') setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') setMenu(false);
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     3. Work cards: Random ↔ Tidy, plus drag in Random mode
+  ──────────────────────────────────────────────────────────── */
+  var stage  = document.getElementById('works-stage');
+  var toggle = document.getElementById('layout-toggle');
+
+  if (stage && toggle) {
+    var lblRandom = document.getElementById('label-random');
+    var lblTidy   = document.getElementById('label-tidy');
+
+    toggle.addEventListener('click', function () {
+      var goTidy = stage.classList.contains('is-random');
+      var cards  = stage.querySelectorAll('.work-card');
+
+      cards.forEach(function (c) { c.style.opacity = '0'; });
+
+      setTimeout(function () {
+        cards.forEach(function (c) {
+          c.style.left = ''; c.style.top = ''; c.style.zIndex = '';
+          c.style.transition = ''; c.style.opacity = '';
+        });
+        stage.classList.toggle('is-random', !goTidy);
+        stage.classList.toggle('is-tidy',    goTidy);
+        toggle.setAttribute('aria-checked', String(goTidy));
+        lblRandom.classList.toggle('is-active', !goTidy);
+        lblTidy.classList.toggle('is-active',    goTidy);
+      }, 200);
+    });
+
+    /* Pointer drag — works for mouse, pen and touch alike */
+    var topZ = 10;
+    stage.querySelectorAll('.work-card').forEach(function (card) {
+      var dragging = false, moved = false;
+      var sx = 0, sy = 0, ox = 0, oy = 0;
+
+      // Belt and braces with the CSS above: kill the native drag outright.
+      card.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+      card.addEventListener('pointerdown', function (e) {
+        if (!stage.classList.contains('is-random')) return;
+        if (window.matchMedia('(max-width: 860px)').matches) return;
+        if (e.button !== undefined && e.button !== 0) return;
+        e.preventDefault();   // stops the browser starting its own drag
+
+        var sr = stage.getBoundingClientRect();
+        var cr = card.getBoundingClientRect();
+        ox = cr.left - sr.left;
+        oy = cr.top  - sr.top;
+        sx = e.clientX; sy = e.clientY;
+        dragging = true; moved = false;
+
+        card.style.left = ox + 'px';
+        card.style.top  = oy + 'px';
+        card.style.zIndex = String(++topZ);
+        card.style.transition = 'none';
+        card.setPointerCapture(e.pointerId);
+      });
+
+      card.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        var dx = e.clientX - sx, dy = e.clientY - sy;
+        if (Math.abs(dx) + Math.abs(dy) > 4) moved = true;
+        card.style.left = (ox + dx) + 'px';
+        card.style.top  = (oy + dy) + 'px';
+      });
+
+      function end() {
+        if (!dragging) return;
+        dragging = false;
+        card.style.transition = '';
+      }
+      card.addEventListener('pointerup', end);
+      card.addEventListener('pointercancel', end);
+
+      card.addEventListener('click', function (e) {
+        if (moved) { e.preventDefault(); moved = false; }
+      });
+    });
+  }
+
+  /* ────────────────────────────────────────────────────────────
+     4. Scroll reveal
+  ──────────────────────────────────────────────────────────── */
+  var targets = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window) || reduce) {
+    targets.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+
+<!-- Halftone cursor field on the footer -->
+<script src="js/trail.js"></script>
+
+</body>
+</html>

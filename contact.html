@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Contact — Yenny.Design</title>
+<meta name="description" content="Get in touch with Yenny Rong — AI Product Designer for fintech. Open to roles, freelance projects and collaborations." />
+<meta name="theme-color" content="#fcf7ee" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="icon" href="img/icon/icon-32.png" sizes="32x32" />
+<link rel="apple-touch-icon" href="img/icon/apple-touch-icon.png" />
+<link rel="stylesheet" href="css/style.css" />
+<script>document.documentElement.classList.add('js');</script>
+
+<style>
+/* ═══════════════════════════════════════════════════════════════
+   CONTACT — "rising sun" composition
+   One very large warm gradient anchored off the top-right corner,
+   a flat sun disc, and a horizon wash from below. Same gradient
+   discipline as the rest of the site: every outer stop fades to a
+   *tinted* zero-alpha colour, never `transparent`.
+═══════════════════════════════════════════════════════════════ */
+
+body { background: #fcf7ee; }
+
+.jp {
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  padding: calc(var(--header-h) + var(--space-9)) 0 var(--space-11);
+  /* Not clipped — clipping slices the corner gradient's own falloff into a
+     visible seam. Horizontal spill is handled by overflow-x on <html>. */
+}
+
+/* Anchored into the top-right corner rather than washed across the whole
+   section — light coming in from one corner, not a yellow panel behind
+   the page. */
+.jp::before {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  right: 0;
+  top: 0;
+  translate: 30% -36%;
+  width:  max(88%, 84vw);
+  height: max(96%, 86vh);
+  pointer-events: none;
+  transition: transform 900ms var(--ease-out);
+  background: radial-gradient(ellipse 50% 50% at var(--sun-x, 50%) var(--sun-y, 50%),
+    rgba(255, 190,  38, 0.96)  0%,
+    rgba(255, 197,  55, 0.90) 15%,
+    rgba(255, 206,  85, 0.78) 28%,
+    rgba(255, 214, 120, 0.60) 41%,
+    rgba(255, 208, 143, 0.43) 54%,
+    rgba(255, 199, 155, 0.28) 67%,
+    rgba(255, 191, 160, 0.15) 79%,
+    rgba(255, 187, 163, 0.06) 90%,
+    rgba(255, 187, 163, 0)   100%
+  );
+}
+
+.jp-inner {
+  position: relative;
+  width: 100%;
+  max-width: calc(var(--container-narrow) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* ── Headline ─────────────────────────────────────────────── */
+
+.jp-eyebrow {
+  font-size: var(--text-sm);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8a4b18;
+  margin-bottom: var(--space-5);
+}
+
+.jp-title {
+  font-family: var(--font-script);
+  font-size: clamp(30px, 4.6vw, 62px);
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  color: #2b1608;
+  max-width: 17ch;
+  text-wrap: balance;
+}
+
+.jp-lede {
+  margin-top: var(--space-6);
+  max-width: 46ch;
+  font-size: var(--text-md);
+  line-height: var(--leading-body);
+  color: #4a2c14;
+}
+
+
+/* ── Sections ─────────────────────────────────────────────── */
+
+.jp-block { margin-top: var(--space-9); }
+
+.jp-block-title {
+  font-size: var(--text-xs);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #96683f;
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid rgba(43, 22, 8, 0.16);
+  margin-bottom: var(--space-6);
+}
+
+.jp-socials { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+
+.jp-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(43, 22, 8, 0.28);
+  background: rgba(255, 252, 245, 0.5);
+  color: #2b1608;
+  font-size: var(--text-base);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+.jp-social:hover {
+  border-color: rgba(43, 22, 8, 0.6);
+  background: rgba(255, 252, 245, 0.8);
+  transform: translateY(-2px);
+}
+.jp-social span { opacity: 0.5; font-size: 0.85em; }
+
+/* ── Intent picker ────────────────────────────────────────── */
+
+.jp-picker { margin-top: 0; }
+
+.jp-picker-label {
+  font-size: var(--text-sm);
+  color: #6d431f;
+  margin-bottom: var(--space-4);
+}
+
+.jp-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.jp-chip {
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 1px solid rgba(43, 22, 8, 0.28);
+  background: rgba(255, 252, 245, 0.5);
+  color: #2b1608;
+  font-size: var(--text-sm);
+  line-height: 1.3;
+  transition: background var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+.jp-chip:hover { border-color: rgba(43, 22, 8, 0.55); transform: translateY(-2px); }
+.jp-chip[aria-pressed="true"] {
+  background: #2b1608;
+  border-color: #2b1608;
+  color: #ffeccd;
+}
+
+/* ── Action row ───────────────────────────────────────────── */
+
+.jp-actions {
+  margin-top: var(--space-7);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.jp-send {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: 999px;
+  background: #2b1608;
+  color: #ffeccd;
+  font-size: var(--text-base);
+  font-weight: 700;
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-base) var(--ease-out);
+  box-shadow: 0 8px 26px rgba(120, 62, 12, 0.28);
+}
+.jp-send:hover { transform: translateY(-2px); box-shadow: 0 14px 38px rgba(120, 62, 12, 0.34); }
+.jp-send span { transition: transform var(--dur-base) var(--ease-out); }
+.jp-send:hover span { transform: translateX(4px); }
+
+.jp-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 15px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(43, 22, 8, 0.3);
+  color: #2b1608;
+  font-size: var(--text-base);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
+}
+.jp-copy:hover { border-color: rgba(43, 22, 8, 0.6); background: rgba(255, 252, 245, 0.6); }
+.jp-copy.is-done { border-color: #1f6b3a; color: #1f6b3a; }
+
+.jp-hint {
+  margin-top: var(--space-4);
+  font-size: var(--text-xs);
+  color: #7a5231;
+  min-height: 1.4em;
+}
+
+/* ── Meta strip ───────────────────────────────────────────── */
+
+.jp-meta {
+  margin-top: var(--space-10);
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(43, 22, 8, 0.16);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-6);
+}
+
+.jp-meta-item { display: flex; flex-direction: column; gap: 6px; }
+
+.jp-meta-key {
+  font-size: var(--text-xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #96683f;
+}
+
+.jp-meta-val { font-size: var(--text-base); color: #2b1608; }
+.jp-meta-val a { text-underline-offset: 4px; }
+.jp-meta-val a:hover { text-decoration: underline; }
+
+.jp-clock { font-variant-numeric: tabular-nums; }
+
+.jp-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #1f9d55;
+  margin-right: 8px;
+  vertical-align: 1px;
+  animation: pulse 2.6s ease-in-out infinite;
+}
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .jp::before { transition: none; }
+}
+
+@media (max-width: 700px) {
+  .jp { align-content: start; }
+  .jp-actions { flex-direction: column; align-items: stretch; }
+  .jp-send, .jp-copy { justify-content: center; }
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="nav-sticky-wrap nav-sticky-wrap--ghost" id="header">
+  <nav class="nav" aria-label="Main">
+    <a href="index.html" class="nav-logo" aria-label="Yenny.Design — home">
+      <img src="img/logo.svg" alt="Yenny.Design" width="1067" height="261" />
+    </a>
+    <ul class="nav-links">
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" aria-current="page">Contact</a></li>
+    </ul>
+    <button class="nav-burger" id="nav-burger" aria-label="Open menu" aria-expanded="false" aria-controls="nav-overlay">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+</div>
+
+<div class="nav-overlay" id="nav-overlay">
+  <a href="projects.html">Projects</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact</a>
+</div>
+
+<main id="main">
+  <section class="jp" aria-labelledby="jp-title">
+    <div class="jp-inner">
+
+      <p class="jp-eyebrow" data-reveal>Contact</p>
+
+      <h1 class="jp-title" id="jp-title" data-reveal data-delay="1">Let's Talk</h1>
+
+      <!-- ── Contact me by ─────────────────────────────────────── -->
+      <section class="jp-block" data-reveal data-delay="3">
+        <h2 class="jp-block-title">Contact me by</h2>
+
+        <div class="jp-actions">
+          <a class="jp-send" href="mailto:rong.yenny@gmail.com">
+            Email <span aria-hidden="true">&rarr;</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- ── Social media ──────────────────────────────────────── -->
+      <section class="jp-block" data-reveal data-delay="4">
+        <h2 class="jp-block-title">Social media</h2>
+        <div class="jp-socials">
+          <a class="jp-social" href="https://instagram.com/yennyrong" target="_blank" rel="noopener">Instagram <span aria-hidden="true">&#8599;</span></a>
+          <!-- TODO Yenny: confirm these two handles -->
+          <a class="jp-social" href="https://www.tiktok.com/@yennyrong" target="_blank" rel="noopener">TikTok <span aria-hidden="true">&#8599;</span></a>
+          <a class="jp-social" href="https://www.linkedin.com/in/yennyrong" target="_blank" rel="noopener">LinkedIn <span aria-hidden="true">&#8599;</span></a>
+        </div>
+      </section>
+
+      <div class="jp-meta" data-reveal data-delay="5">
+        <div class="jp-meta-item">
+          <span class="jp-meta-key">Status</span>
+          <span class="jp-meta-val"><i class="jp-dot" aria-hidden="true"></i>Open to new work</span>
+        </div>
+        <div class="jp-meta-item">
+          <span class="jp-meta-key">Based in</span>
+          <span class="jp-meta-val">Barcelona, Spain<br />San José, Costa Rica</span>
+        </div>
+        <div class="jp-meta-item">
+          <span class="jp-meta-key">Local time</span>
+          <span class="jp-meta-val jp-clock" id="jp-clock">—</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="footer-bg" aria-hidden="true"></div>
+  <div class="footer-inner">
+
+    <div class="footer-col-left" data-reveal>
+      <p class="footer-heading">Let's create</p>
+      <div class="footer-contact">
+        <a href="mailto:rong.yenny@gmail.com">Email</a>
+        <a href="https://instagram.com/yennyrong" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.tiktok.com/@yennyrong" target="_blank" rel="noopener">TikTok</a>
+        <a href="https://www.linkedin.com/in/yennyrong" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+      <div class="footer-links-list">
+        <a href="files/Yenny-CV-ENGLISH.pdf" target="_blank" rel="noopener">CV</a>
+        <a href="about.html">About</a>
+        <span>Behance (Not yet)</span>
+      </div>
+    </div>
+
+    <div class="footer-skills">
+      <div class="footer-skill-col" data-reveal data-delay="1">
+        <h4>Instruments</h4>
+        <ul><li>Figma</li><li>Cursor</li><li>Claude</li><li>Readymag</li><li>Framer</li><li>Illustrator</li></ul>
+      </div>
+      <div class="footer-skill-col" data-reveal data-delay="2">
+        <h4>Hard Skills</h4>
+        <ul><li>AI-Assisted Design</li><li>UX Research</li><li>UI Design</li><li>Web Design</li><li>Copywriting</li></ul>
+      </div>
+      <div class="footer-skill-col" data-reveal data-delay="3">
+        <h4>Soft Skills</h4>
+        <ul><li>Management</li><li>Presentation Skills</li><li>Multilingual</li><li>Teamwork</li><li>Multicultural</li></ul>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-base">
+    <span>© 2026 Yenny Rong</span>
+    <a href="#main">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  /* Change this one line if the "Based in" copy above changes. */
+  var TIMEZONE = 'Europe/Madrid';
+  var EMAIL    = 'rong.yenny@gmail.com';
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── Mobile menu ─────────────────────────────────────────── */
+  var burger  = document.getElementById('nav-burger');
+  var overlay = document.getElementById('nav-overlay');
+  if (burger && overlay) {
+    var setMenu = function (open) {
+      burger.classList.toggle('is-open', open);
+      overlay.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      document.body.classList.toggle('nav-open', open);
+    };
+    burger.addEventListener('click', function () {
+      setMenu(!overlay.classList.contains('is-open'));
+    });
+    overlay.addEventListener('click', function (e) { if (e.target.tagName === 'A') setMenu(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
+  }
+
+  /* ── Header goes solid once you scroll off the gradient ──── */
+  var header = document.getElementById('header');
+  var onScroll = function () {
+    header.classList.toggle('is-stuck', (window.scrollY || 0) > 40);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── The sun drifts with the pointer ─────────────────────── */
+  var jp = document.querySelector('.jp');
+  if (jp && !reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    var pending = false, px = 0, py = 0;
+    window.addEventListener('pointermove', function (e) {
+      px = e.clientX / window.innerWidth  - 0.5;
+      py = e.clientY / window.innerHeight - 0.5;
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        jp.style.setProperty('--sun-x', (71 + px * 7) + '%');
+        jp.style.setProperty('--sun-y', (26 + py * 6) + '%');
+      });
+    }, { passive: true });
+  }
+
+  /* ── Live local time ─────────────────────────────────────── */
+  var clock = document.getElementById('jp-clock');
+  if (clock) {
+    var fmt;
+    try {
+      fmt = new Intl.DateTimeFormat('en-GB', {
+        timeZone: TIMEZONE, hour: '2-digit', minute: '2-digit', hour12: false
+      });
+    } catch (err) { fmt = null; }
+    var tick = function () {
+      clock.textContent = fmt ? fmt.format(new Date()) + ' local' : '';
+    };
+    tick();
+    setInterval(tick, 15000);
+  }
+
+  /* ── Scroll reveal ───────────────────────────────────────── */
+  var targets = document.querySelectorAll('[data-reveal]');
+  if (!('IntersectionObserver' in window) || reduce) {
+    targets.forEach(function (el) { el.classList.add('is-visible'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('is-visible'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    targets.forEach(function (el) { io.observe(el); });
+  }
+})();
+</script>
+
+<script src="js/trail.js"></script>
+
+</body>
+</html>
