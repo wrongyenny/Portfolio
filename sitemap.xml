@@ -45,4 +45,12 @@
     <lastmod>2026-09-01</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://yenny.design/work-hola-barcelona.html</loc>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://yenny.design/hola-barcelona.html</loc>
+    <priority>0.6</priority>
+  </url>
 </urlset>
