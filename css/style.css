@@ -526,6 +526,9 @@ body.nav-open { overflow: hidden; }
 [data-reveal="left"]  { transform: translateX(-28px); }
 [data-reveal="right"] { transform: translateX(28px); }
 [data-reveal="scale"] { transform: scale(0.95); }
+/* Reveals something inside the element (a pseudo-element glow) rather than
+   the element itself, so the host must not fade or move. */
+[data-reveal="glow"]  { opacity: 1; transform: none; will-change: auto; }
 
 [data-reveal].is-visible { opacity: 1; transform: none; }
 

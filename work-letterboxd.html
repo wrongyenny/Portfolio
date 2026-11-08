@@ -147,7 +147,7 @@
 .shot-frame {
   position: relative;
   aspect-ratio: var(--ar, 16 / 9);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   overflow: hidden;
   background:
     radial-gradient(ellipse 80% 90% at 25% 15%, rgba(96, 220, 150, 0.16), rgba(96, 220, 150, 0) 62%),
@@ -218,7 +218,7 @@
 .journey {
   padding: var(--space-6);
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   background: rgba(255, 255, 255, 0.55);
   display: flex;
   flex-direction: column;
@@ -277,7 +277,7 @@
 .screen-frame {
   position: relative;
   aspect-ratio: 402 / 875;          /* the Figma artboard size */
-  border-radius: 22px;
+  border-radius: 0;
   overflow: hidden;
   background:
     radial-gradient(ellipse 80% 70% at 30% 12%, rgba(96,220,150,0.14), rgba(96,220,150,0) 60%),
@@ -379,7 +379,7 @@
 .pillars li {
   padding: var(--space-5) var(--space-4);
   border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   background: rgba(255, 255, 255, 0.5);
   font-size: var(--text-sm);
   line-height: 1.4;
@@ -394,7 +394,7 @@
 }
 .problem {
   padding: var(--space-6);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   background: linear-gradient(160deg, #1d2126 0%, #14181c 60%, #0e1114 100%);
   color: rgba(255, 255, 255, 0.82);
   display: flex;
@@ -433,13 +433,13 @@
 .proto-video {
   margin: var(--space-7) 0 0;
   padding: clamp(8px, 1vw, 14px);
-  border-radius: clamp(16px, 1.6vw, 24px);
+  border-radius: 0;
   background: linear-gradient(160deg, #23282d 0%, #14181c 55%, #0e1114 100%);
   box-shadow: var(--shadow-lift);
   line-height: 0;
 }
 .proto-video video {
-  border-radius: clamp(10px, 1vw, 16px);
+  border-radius: 0;
   aspect-ratio: 16 / 9;
   object-fit: cover;
 }
