@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="Get in touch with Yenny Rong — AI Product Designer for fintech. Open to roles, freelance projects and collaborations." />
 <meta name="twitter:image" content="https://yenny.design/img/og/home.jpg" />
 <!-- ── /Social preview ────────────────────────────────────── -->
-<meta name="theme-color" content="#fcf7ee" />
+<meta name="theme-color" content="#faf8f5" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="icon" href="img/icon/icon-32.png" sizes="32x32" />
@@ -38,8 +38,6 @@
    *tinted* zero-alpha colour, never `transparent`.
 ═══════════════════════════════════════════════════════════════ */
 
-body { background: #fcf7ee; }
-
 .jp {
   position: relative;
   isolation: isolate;
@@ -49,33 +47,6 @@ body { background: #fcf7ee; }
   padding: calc(var(--header-h) + var(--space-9)) 0 var(--space-11);
   /* Not clipped — clipping slices the corner gradient's own falloff into a
      visible seam. Horizontal spill is handled by overflow-x on <html>. */
-}
-
-/* Anchored into the top-right corner rather than washed across the whole
-   section — light coming in from one corner, not a yellow panel behind
-   the page. */
-.jp::before {
-  content: '';
-  position: absolute;
-  z-index: -2;
-  right: 0;
-  top: 0;
-  translate: 30% -36%;
-  width:  max(88%, 84vw);
-  height: max(96%, 86vh);
-  pointer-events: none;
-  transition: transform 900ms var(--ease-out);
-  background: radial-gradient(ellipse 50% 50% at var(--sun-x, 50%) var(--sun-y, 50%),
-    rgba(255, 190,  38, 0.96)  0%,
-    rgba(255, 197,  55, 0.90) 15%,
-    rgba(255, 206,  85, 0.78) 28%,
-    rgba(255, 214, 120, 0.60) 41%,
-    rgba(255, 208, 143, 0.43) 54%,
-    rgba(255, 199, 155, 0.28) 67%,
-    rgba(255, 191, 160, 0.15) 79%,
-    rgba(255, 187, 163, 0.06) 90%,
-    rgba(255, 187, 163, 0)   100%
-  );
 }
 
 .jp-inner {
@@ -277,10 +248,6 @@ body { background: #fcf7ee; }
 }
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-@media (prefers-reduced-motion: reduce) {
-  .jp::before { transition: none; }
-}
-
 @media (max-width: 700px) {
   .jp { align-content: start; }
   .jp-actions { flex-direction: column; align-items: stretch; }
@@ -441,23 +408,6 @@ body { background: #fcf7ee; }
   };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
-
-  /* ── The sun drifts with the pointer ─────────────────────── */
-  var jp = document.querySelector('.jp');
-  if (jp && !reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    var pending = false, px = 0, py = 0;
-    window.addEventListener('pointermove', function (e) {
-      px = e.clientX / window.innerWidth  - 0.5;
-      py = e.clientY / window.innerHeight - 0.5;
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(function () {
-        pending = false;
-        jp.style.setProperty('--sun-x', (71 + px * 7) + '%');
-        jp.style.setProperty('--sun-y', (26 + py * 6) + '%');
-      });
-    }, { passive: true });
-  }
 
   /* ── Live local time ─────────────────────────────────────── */
   var clock = document.getElementById('jp-clock');

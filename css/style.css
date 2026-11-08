@@ -374,7 +374,13 @@ body.nav-open { overflow: hidden; }
 .footer {
   position: relative;
   isolation: isolate;
-  overflow: hidden;
+  /* `hidden` sliced the cursor glow into a hard horizontal line wherever the
+     blob crossed this edge — the cut read as a seam between the footer and
+     the section above. `clip` with a margin lets the blob finish its own
+     falloff in the open air above the footer instead of being chopped.
+     `clip` (unlike `scroll`/`auto`) still creates no scrollable overflow. */
+  overflow: clip;
+  overflow-clip-margin: 420px;
   /* No margin-top: the gradient's own transparent head is the breathing room. */
   display: grid;
   align-content: center;

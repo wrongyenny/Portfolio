@@ -21,7 +21,7 @@
 <meta name="twitter:description" content="Yenny Rong — product designer for AI-driven fintech. Business student turned UX researcher turned product designer." />
 <meta name="twitter:image" content="https://yenny.design/img/og/about.jpg" />
 <!-- ── /Social preview ────────────────────────────────────── -->
-<meta name="theme-color" content="#f4fafd" />
+<meta name="theme-color" content="#faf8f5" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="icon" href="img/icon/icon-32.png" sizes="32x32" />
@@ -31,73 +31,14 @@
 
 <style>
 /* ═══════════════════════════════════════════════════════════════
-   ABOUT — "sky" composition
-   Same gradient discipline as the rest of the site: one very large
-   ellipse spilling past every edge, a horizon wash from below, and
-   every outer stop fading to a *tinted* zero-alpha colour so there
-   is never a grey rim.
+   ABOUT
+   Plain page: background comes from --color-bg, same as Projects.
 ═══════════════════════════════════════════════════════════════ */
-
-body { background: #f4fafd; }
 
 .sky {
   position: relative;
   isolation: isolate;
   padding: calc(var(--header-h) + var(--space-8)) 0 var(--space-9);
-  /* Deliberately NOT clipped. Clipping cut the sky's soft bottom edge into a
-     visible horizontal seam where the section ends; letting it bleed puts the
-     zero-alpha rim in open space instead. Horizontal spill is already handled
-     by `overflow-x: clip` on <html>. */
-}
-
-/* Anchored into the top-left corner rather than washed across the whole
-   section — it should read as light coming in from one corner, not as a
-   blue panel behind the page. */
-.sky::before {
-  content: '';
-  position: absolute;
-  z-index: -3;
-  left: 0;
-  top: 0;
-  translate: -32% -38%;
-  width:  max(92%, 88vw);
-  height: max(92%, 82vh);
-  pointer-events: none;
-  background: radial-gradient(ellipse 52% 52% at var(--sky-x, 50%) var(--sky-y, 50%),
-    rgba(122, 198, 240, 0.94)  0%,
-    rgba(134, 205, 243, 0.86) 14%,
-    rgba(152, 214, 246, 0.72) 27%,
-    rgba(172, 223, 248, 0.55) 40%,
-    rgba(192, 231, 249, 0.39) 53%,
-    rgba(210, 238, 250, 0.25) 66%,
-    rgba(224, 243, 251, 0.13) 79%,
-    rgba(236, 248, 252, 0.05) 90%,
-    rgba(236, 248, 252, 0)   100%
-  );
-  transition: transform 1000ms var(--ease-out);
-}
-
-/* One soft cloud drifting inside the corner light */
-.cloud {
-  position: absolute;
-  z-index: -2;
-  border-radius: 50%;
-  pointer-events: none;
-  background: radial-gradient(circle closest-side,
-    rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.40) 42%,
-    rgba(255,255,255,0.16) 68%, rgba(255,255,255,0) 100%);
-  filter: blur(6px);
-}
-.cloud--a {
-  top: 12%; left: -8%;
-  width: clamp(280px, 38vw, 620px); height: clamp(150px, 20vw, 320px);
-  animation: drift-a 34s ease-in-out infinite alternate;
-}
-@keyframes drift-a { from { transform: translate3d(0,0,0); } to { transform: translate3d(70px,-26px,0); } }
-
-@media (prefers-reduced-motion: reduce) {
-  .cloud { animation: none; }
-  .sky::before { transition: none; }
 }
 
 .wrap {
@@ -307,7 +248,6 @@ body { background: #f4fafd; }
 
   <!-- ══════════ SKY ══════════ -->
   <section class="sky" aria-labelledby="about-title">
-    <span class="cloud cloud--a" aria-hidden="true"></span>
 
     <div class="wrap">
 
@@ -492,23 +432,6 @@ body { background: #f4fafd; }
   var onScroll = function () { header.classList.toggle('is-stuck', (window.scrollY || 0) > 40); };
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
-
-  /* ── The sky drifts with the pointer ─────────────────────── */
-  var sky = document.querySelector('.sky');
-  if (sky && !reduce && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
-    var pending = false, px = 0, py = 0;
-    window.addEventListener('pointermove', function (e) {
-      px = e.clientX / window.innerWidth  - 0.5;
-      py = e.clientY / window.innerHeight - 0.5;
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(function () {
-        pending = false;
-        sky.style.setProperty('--sky-x', (42 + px * 8) + '%');
-        sky.style.setProperty('--sky-y', (46 + py * 7) + '%');
-      });
-    }, { passive: true });
-  }
 
   /* ── Scroll reveal ───────────────────────────────────────── */
   var targets = document.querySelectorAll('[data-reveal]');
