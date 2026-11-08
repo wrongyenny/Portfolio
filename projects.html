@@ -45,20 +45,15 @@
     /* Grid and cards mirror the home page's tidy view: the thumbnail is the
        card, and the caption sits under it on the page rather than inside a
        tile of its own. Tokens are shared, so the two stay in step. */
-    /* Masonry rather than a fixed grid: each thumbnail keeps its own
-       proportions instead of being cropped to a shared 4:3, so the columns
-       stagger and the page reads as an uneven editorial grid. */
     .projects-grid {
-      column-count: 3;
-      column-gap: var(--space-5);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-6) var(--space-5);
     }
 
     .project-card {
       display: block;
       text-decoration: none;
-      break-inside: avoid;
-      -webkit-column-break-inside: avoid;
-      margin-bottom: var(--space-6);
       transition: transform var(--dur-base) var(--ease-out),
                   opacity var(--dur-base) var(--ease-out);
     }
@@ -66,18 +61,19 @@
 
     .project-card-img {
       position: relative;
+      aspect-ratio: 4 / 3;
       border-radius: 0;
       overflow: hidden;
       background: #ece7e2;
       box-shadow: var(--shadow-card);
       transition: box-shadow var(--dur-base) var(--ease-out);
-      line-height: 0;
     }
     .project-card:hover .project-card-img { box-shadow: var(--shadow-lift); }
 
     .project-card-img img {
       width: 100%;
-      height: auto;
+      height: 100%;
+      object-fit: cover;
       display: block;
       transition: transform var(--dur-slow) var(--ease-out);
     }
@@ -102,8 +98,12 @@
       color: var(--color-ink-strong);
     }
 
-    @media (max-width: 900px) { .projects-grid { column-count: 2; } }
-    @media (max-width: 460px) { .projects-grid { column-count: 1; } }
+    @media (max-width: 900px) {
+      .projects-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 460px) {
+      .projects-grid { grid-template-columns: minmax(0, 1fr); }
+    }
 
   </style>
 

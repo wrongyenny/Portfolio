@@ -247,28 +247,6 @@ html:not(.js) #flying-logo { display: none; }
   object-fit: cover;
 }
 
-/* Dithered plate sits on top and dissolves on hover to reveal the photo
-   underneath. `image-rendering: pixelated` keeps the dither crisp when the
-   561px source is scaled up — smoothing it would defeat the whole effect. */
-.intro-photo .plate {
-  z-index: 2;
-  image-rendering: pixelated;
-  transition: opacity 1100ms var(--ease-out);
-}
-.intro-photo .real {
-  z-index: 1;
-  transform: scale(1.02);
-  transition: transform 1400ms var(--ease-out);
-}
-.intro-photo:hover .plate,
-.intro-photo:focus-within .plate { opacity: 0; }
-.intro-photo:hover .real { transform: scale(1); }
-
-@media (prefers-reduced-motion: reduce) {
-  .intro-photo .plate { transition-duration: 1ms; }
-  .intro-photo .real  { transition: none; transform: none; }
-}
-
 .intro-text {
   display: flex;
   flex-direction: column;
@@ -591,9 +569,8 @@ html:not(.js) #flying-logo { display: none; }
   <!-- ══════════ INTRO ══════════ -->
   <section class="intro" aria-label="About Yenny" data-reveal="glow">
     <div class="intro-inner">
-      <figure class="intro-photo" data-reveal="left" tabindex="0">
-        <img class="real"  src="img/thumbs/about.jpg" alt="Yenny Rong" loading="lazy" />
-        <img class="plate" src="img/thumbs/about-pixel.png" alt="" aria-hidden="true" loading="lazy" />
+      <figure class="intro-photo" data-reveal="left">
+        <img src="img/thumbs/portrait.jpg" alt="Yenny Rong" loading="lazy" />
       </figure>
       <div class="intro-text" data-reveal="right">
         <p>Welcome to my site! I'm Yenny Rong, born and raised in Costa Rica. Growing up I always enjoyed making random stuff with a computer.</p>
