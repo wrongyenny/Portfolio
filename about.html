@@ -106,19 +106,6 @@
   box-shadow: 0 22px 60px rgba(18, 62, 84, 0.26);
 }
 .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.portrait .plate {
-  z-index: 2;
-  image-rendering: pixelated;      /* smoothing the dither defeats the effect */
-  transition: opacity 1100ms var(--ease-out);
-}
-.portrait .real { z-index: 1; transform: scale(1.02); transition: transform 1400ms var(--ease-out); }
-.portrait:hover .plate, .portrait:focus-within .plate { opacity: 0; }
-.portrait:hover .real { transform: scale(1); }
-@media (prefers-reduced-motion: reduce) {
-  .portrait .plate { transition-duration: 1ms; }
-  .portrait .real { transition: none; transform: none; }
-}
-
 .bio-text { display: flex; flex-direction: column; gap: var(--space-5); }
 .bio-text p {
   font-size: var(--text-md);
@@ -258,9 +245,8 @@
       </p>
 
       <div class="bio">
-        <figure class="portrait" data-reveal="left" data-delay="2" tabindex="0">
-          <img class="real"  src="img/thumbs/about.jpg" alt="Yenny Rong" loading="lazy" />
-          <img class="plate" src="img/thumbs/about-pixel.png" alt="" aria-hidden="true" loading="lazy" />
+        <figure class="portrait" data-reveal="left" data-delay="2">
+          <img src="img/thumbs/portrait.jpg" alt="Yenny Rong" loading="lazy" />
         </figure>
 
         <div class="bio-text" data-reveal="right" data-delay="3">
