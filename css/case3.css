@@ -181,3 +181,10 @@
 .case3 .scope-label { margin: 0 0 10px; font-size: var(--text-xs); }
 .case3 .pillars { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; list-style: none; }
 .case3 .pillars li { padding: 6px 10px; font-size: var(--text-xs); }
+
+/* Multi-image groups stack so each visual stays large */
+.case3 .case-img-trio,
+.case3 .mockup-grid-2 { grid-template-columns: 1fr; gap: clamp(14px, 1.6vw, 24px); }
+
+/* Hero images: a little taller so the visuals column outweighs the text */
+.case3 .case3-visuals .case-hero-img { aspect-ratio: 16 / 9; }
