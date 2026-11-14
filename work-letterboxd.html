@@ -471,6 +471,7 @@
   .chapter-head { flex-direction: column; gap: 4px; }
 }
 </style>
+<link rel="stylesheet" href="css/case3.css" />
 </head>
 
 <body>
@@ -499,61 +500,48 @@
   <a href="contact.html">Contact</a>
 </div>
 
-<main id="main" class="case">
+<main id="main" class="case3">
 
-  <!-- ══ Masthead ══ -->
-  <header class="wrap">
-    <p class="case-kicker" data-reveal>Personal project · UX/UI · 2025</p>
-    <h1 class="case-title" data-reveal data-delay="1">Letterboxd</h1>
-    <p class="case-standfirst" data-reveal data-delay="2">
-      Reading the whole app for friction — from the first log to the fiftieth list.
-    </p>
-
-    <dl class="case-facts" data-reveal data-delay="3">
-      <div class="case-fact"><dt>Type</dt><dd>Personal project</dd></div>
-      <div class="case-fact"><dt>Tools</dt><dd>Figma · Figma Make · Claude</dd></div>
-      <div class="case-fact"><dt>Scope</dt><dd>UX research · UI redesign · Prototyping</dd></div>
-      <div class="case-fact"><dt>Status</dt><dd>In production</dd></div>
-    </dl>
-
-    <div class="proto" data-reveal data-delay="4">
+  <div class="case3-grid">
+  <aside class="case3-side">
+<header class="case-header">
+      <p class="case-eyebrow">Personal project · UX/UI · 2025</p>
+      <h1 class="case-title">Letterboxd</h1>
+      <p class="case-tagline">Reading the whole app for friction — from the first log to the fiftieth list.</p>
+    </header>
+<div class="case-meta">
+      <div class="case-meta-item"><span class="case-meta-label">Type</span><span class="case-meta-value">Personal project</span></div>
+      <div class="case-meta-item"><span class="case-meta-label">Tools</span><span class="case-meta-value">Figma · Figma Make · Claude</span></div>
+      <div class="case-meta-item"><span class="case-meta-label">Scope</span><span class="case-meta-value">UX research · UI redesign · Prototyping</span></div>
+      <div class="case-meta-item"><span class="case-meta-label">Status</span><span class="case-meta-value">In production</span></div>
+    </div>
+<div class="proto">
       <a class="proto-btn" href="https://www.figma.com/make/sSIf1ukfxDH9tdS73ETvVx/Implement-Movie-Card-Actions?t=ySqm4IubNYsSzyoe-1"
          target="_blank" rel="noopener">Open the prototype <span aria-hidden="true">&#8599;</span></a>
       <p class="proto-note">Built in Figma Make.</p>
     </div>
-  </header>
+  </aside>
 
-  <div class="wrap">
-
-    <div class="shots" data-reveal>
-      <figure class="shot">
-        <div class="shot-frame" style="--ar: 16 / 9">
-          <img src="img/letterboxd/hero.jpg" alt="Letterboxd redesign — overview of the redesigned screens"
-               onerror="this.closest('.shot').classList.add('is-empty')" />
-          <p class="shot-empty">letterboxd/hero.jpg — redesign overview</p>
-        </div>
-      </figure>
-    </div>
-
-    <!-- ══ 01 Frame ══ -->
-    <section class="chapter" data-reveal>
-      <div class="chapter-head"><span class="chapter-num">01</span><h2>Frame</h2></div>
-      <p class="note">
+  <div class="case3-flow">
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">01</span><h2 class="case-section-title">Frame</h2></div>
+        <div class="case-section-body">
+<p class="note">
         I started using Letterboxd to keep a proper log of what I watch. For an app
         built around something as simple as logging a film, the everyday experience
         is rougher than it should be.
       </p>
-      <p class="pull">
+<p class="pull">
         Every primary action — log, rate, watchlist — sits behind a “⋯” menu instead
         of on the film page.
       </p>
-      <p class="note">
+<p class="note">
         Naming doesn't help either: “Journal” reads like a personal diary but is
         actually the editorial section. Several menu pages overlap in purpose.
         <b>The objective:</b> improve the UX and UI while leaving the branding intact.
       </p>
-
-      <div class="scope" data-reveal>
+<div class="scope">
         <p class="scope-label">Scope — the six pillars</p>
         <ul class="pillars">
           <li>Logging &amp; rating</li>
@@ -564,8 +552,19 @@
           <li>Reviews</li>
         </ul>
       </div>
-
-      <div class="problems" data-reveal>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="shots" data-reveal>
+      <figure class="shot">
+        <div class="shot-frame" style="--ar: 16 / 9">
+          <img src="img/letterboxd/hero.jpg" alt="Letterboxd redesign — overview of the redesigned screens"
+               onerror="this.closest('.shot').classList.add('is-empty')" />
+          <p class="shot-empty">letterboxd/hero.jpg — redesign overview</p>
+        </div>
+      </figure>
+    </div>
+<div class="problems">
         <article class="problem">
           <span class="problem-n">01 — Depth</span>
           <h3>Everything lives behind “⋯”</h3>
@@ -585,22 +584,25 @@
              version of the same posters. More pages, less clarity.</p>
         </article>
       </div>
+      </div>
     </section>
-
-    <!-- ══ 02 Research ══ -->
-    <section class="chapter" data-reveal>
-      <div class="chapter-head"><span class="chapter-num">02</span><h2>Research</h2></div>
-      <p class="note">
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">02</span><h2 class="case-section-title">Research</h2></div>
+        <div class="case-section-body">
+<p class="note">
         Instead of a heuristic scorecard: a full screen-by-screen flow map in FigJam,
         annotating friction where it actually happens, then grouping issues by
         <b>Jobs to Be Done</b> rather than by app section.
       </p>
-      <p class="pull">
+<p class="pull">
         The app feels built first and designed second — features layered on over time
         rather than planned as one system.
       </p>
-
-      <div class="diagram" data-reveal>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="diagram">
         <svg viewBox="0 0 1110 500" role="img" aria-label="Flow map of the Letterboxd app with friction points marked">
         <path d="M154 251.0 C 244 251.0, 210 57, 300 57" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
         <path d="M450 57 L 600 57" fill="none" stroke="rgba(31,31,31,0.22)" stroke-width="1.5"/>
@@ -637,13 +639,17 @@
         </svg>
         <p class="diagram-caption">The flow map redrawn — every surface walked, friction marked where it happens. Clustering those marks by what the person was trying to do is what produced the six jobs below.</p>
       </div>
+      </div>
     </section>
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">03</span><h2 class="case-section-title">Six jobs, six journeys</h2></div>
+        <div class="case-section-body">
 
-    <!-- ══ 03 Define ══ -->
-    <section class="chapter" data-reveal>
-      <div class="chapter-head"><span class="chapter-num">03</span><h2>Six jobs, six journeys</h2></div>
-
-      <div class="journeys">
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="journeys">
         <article class="journey is-shipped">
           <p class="journey-id">J01 <b>Shipped</b></p>
           <h3>Remember what I've watched</h3>
@@ -686,18 +692,21 @@
           <p><b>Why parked —</b> the mobile composer is designed; the web toolbar is a separate fight.</p>
         </article>
       </div>
+      </div>
     </section>
-
-    <!-- ══ 04 Ideate ══ -->
-    <section class="chapter" data-reveal>
-      <div class="chapter-head"><span class="chapter-num">04</span><h2>Choosing what to build</h2></div>
-      <p class="note">
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">04</span><h2 class="case-section-title">Choosing what to build</h2></div>
+        <div class="case-section-body">
+<p class="note">
         Six journeys is more than one case study should try to fix. Plotting them by
         impact against effort picked the first three plus the Journal rename; J04 and
         J05 were parked.
       </p>
-
-      <div class="diagram" data-reveal>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="diagram">
         <svg viewBox="0 0 1080 500" role="img" aria-label="Impact versus effort matrix with the six journeys plotted">
         <rect x="120" y="40" width="780" height="380" fill="#ffffff" stroke="rgba(31,31,31,0.22)"/>
         <line x1="510.0" y1="40" x2="510.0" y2="420" stroke="rgba(31,31,31,0.22)" stroke-dasharray="4 5"/>
@@ -736,8 +745,7 @@
         <p class="diagram-caption">J1–J6 plotted by impact against effort. The rename was almost free, logging
         was the biggest single win, and the two parked jobs sit where the cost stopped making sense for one pass.</p>
       </div>
-
-      <div class="diagram diagram--sketch" data-reveal>
+<div class="diagram diagram--sketch">
         <svg viewBox="0 0 760 440" role="img" aria-label="Three concept directions for the film-page actions">
         <text x="20" y="26" font-family="ui-monospace,monospace" font-size="13" font-weight="700" fill="#1f1f1f">A — Inline bar</text>
         <rect x="20" y="40" width="210" height="340" rx="24" fill="#ffffff" stroke="rgba(31,31,31,0.22)" stroke-width="1"/>
@@ -797,19 +805,21 @@
         </svg>
         <p class="diagram-caption">Three directions for surfacing the film-page actions, before committing to one.</p>
       </div>
+      </div>
     </section>
-
-    <!-- ══ 05 Design ══ -->
-    <section class="chapter" data-reveal>
-      <div class="chapter-head"><span class="chapter-num">05</span><h2>Design</h2></div>
-      <p class="note">
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">05</span><h2 class="case-section-title">Design</h2></div>
+        <div class="case-section-body">
+<p class="note">
         One system across every journey: dark theme, glass surfaces, rounded actions,
         and three accents each doing exactly one job — green for logging, sky blue for
         a chosen option among several, orange for something new needing attention.
       </p>
-
-
-      <div class="shots">
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="shots">
         <figure class="shot">
           <div class="shot-frame" style="--ar: 16 / 9">
             <img src="img/letterboxd/mockup-1.webp" alt="Letterboxd redesign — film page, home quick actions and the diary calendar" loading="lazy"
@@ -818,11 +828,18 @@
           </div>
         </figure>
       </div>
-
-      <h3 class="screens-head">Logging — J01</h3>
-      <p class="note">The buried “⋯” menu is gone. Log, Rate &amp; Review, Watchlist and Add to List sit in one bar on the film page, the same four wherever you arrived from. A long-press on any poster surfaces them without opening the page at all.</p>
-      <p class="note"><b>Resolves —</b> buried CTAs, unconfirmed quick-add.</p>
-      <div class="screens">
+      </div>
+    </section>
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">05.1</span><h3 class="case-section-title">Logging — J01</h3></div>
+        <div class="case-section-body">
+<p class="note">The buried “⋯” menu is gone. Log, Rate &amp; Review, Watchlist and Add to List sit in one bar on the film page, the same four wherever you arrived from. A long-press on any poster surfaces them without opening the page at all.</p>
+<p class="note"><b>Resolves —</b> buried CTAs, unconfirmed quick-add.</p>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="screens">
         <figure class="screen">
           <div class="screen-frame">
             <img src="img/letterboxd/home.webp" alt="Home" loading="lazy"
@@ -880,11 +897,18 @@
           <figcaption>Diary — list view</figcaption>
         </figure>
       </div>
-
-      <h3 class="screens-head">Discovery — J02</h3>
-      <p class="note">Filters that actually filter: tap a genre chip and the grid updates live, sky blue marking the choice. The filters that aren't wired yet are labelled as such rather than faked.</p>
-      <p class="note"><b>Resolves —</b> decorative filters, no browsing path.</p>
-      <div class="screens">
+      </div>
+    </section>
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">05.2</span><h3 class="case-section-title">Discovery — J02</h3></div>
+        <div class="case-section-body">
+<p class="note">Filters that actually filter: tap a genre chip and the grid updates live, sky blue marking the choice. The filters that aren't wired yet are labelled as such rather than faked.</p>
+<p class="note"><b>Resolves —</b> decorative filters, no browsing path.</p>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="screens">
         <figure class="screen">
           <div class="screen-frame">
             <img src="img/letterboxd/discovery.webp" alt="Discovery" loading="lazy"
@@ -902,11 +926,18 @@
           <figcaption>Discovery — filters open</figcaption>
         </figure>
       </div>
-
-      <h3 class="screens-head">Lists — J03</h3>
-      <p class="note">Watchlist gets top billing as the list everyone already has; everything else sits below with a cover mosaic and a public/private badge. Reordering is drag-and-drop — no “Ranked List” toggle, no typing position numbers.</p>
-      <p class="note"><b>Resolves —</b> clunky reordering, no dedicated list home.</p>
-      <div class="screens">
+      </div>
+    </section>
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">05.3</span><h3 class="case-section-title">Lists — J03</h3></div>
+        <div class="case-section-body">
+<p class="note">Watchlist gets top billing as the list everyone already has; everything else sits below with a cover mosaic and a public/private badge. Reordering is drag-and-drop — no “Ranked List” toggle, no typing position numbers.</p>
+<p class="note"><b>Resolves —</b> clunky reordering, no dedicated list home.</p>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="screens">
         <figure class="screen">
           <div class="screen-frame">
             <img src="img/letterboxd/lists-hub.webp" alt="My Lists — hub" loading="lazy"
@@ -940,10 +971,17 @@
           <figcaption>Create a new list</figcaption>
         </figure>
       </div>
-
-      <h3 class="screens-head">Profile &amp; social — J04</h3>
-      <p class="note">One profile with one clear identity: films logged, followers, following and a liked-films grid up front. A Friends tab paired with News turns other people's activity into something worth checking, and notifications get their own surface.</p>
-      <div class="screens">
+      </div>
+    </section>
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">05.4</span><h3 class="case-section-title">Profile &amp; social — J04</h3></div>
+        <div class="case-section-body">
+<p class="note">One profile with one clear identity: films logged, followers, following and a liked-films grid up front. A Friends tab paired with News turns other people's activity into something worth checking, and notifications get their own surface.</p>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="screens">
         <figure class="screen">
           <div class="screen-frame">
             <img src="img/letterboxd/profile.webp" alt="Profile" loading="lazy"
@@ -969,11 +1007,18 @@
           <figcaption>Notifications</figcaption>
         </figure>
       </div>
-
-      <h3 class="screens-head">Film culture — J06</h3>
-      <p class="note">“Journal” becomes News — the real-world term for what it actually is: editorial, interviews and festival coverage, not a personal diary.</p>
-      <p class="note"><b>Resolves —</b> a nav label that described the wrong thing.</p>
-      <div class="screens">
+      </div>
+    </section>
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">05.5</span><h3 class="case-section-title">Film culture — J06</h3></div>
+        <div class="case-section-body">
+<p class="note">“Journal” becomes News — the real-world term for what it actually is: editorial, interviews and festival coverage, not a personal diary.</p>
+<p class="note"><b>Resolves —</b> a nav label that described the wrong thing.</p>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<div class="screens">
         <figure class="screen">
           <div class="screen-frame">
             <img src="img/letterboxd/news.webp" alt="News tab" loading="lazy"
@@ -983,8 +1028,7 @@
           <figcaption>News tab</figcaption>
         </figure>
       </div>
-
-      <div class="shots">
+<div class="shots">
         <figure class="shot">
           <div class="shot-frame" style="--ar: 16 / 9">
             <img src="img/letterboxd/mockup-2.webp" alt="Letterboxd redesign — film page and a ranked list: track your taste, curate your cinema" loading="lazy"
@@ -993,90 +1037,56 @@
           </div>
         </figure>
       </div>
-
+      </div>
     </section>
-
-    <!-- ══ 06 Reflect ══ -->
-    <section class="chapter" data-reveal>
-      <div class="chapter-head"><span class="chapter-num">06</span><h2>Reflect</h2></div>
-      <p class="note">
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">06</span><h2 class="case-section-title">Reflect</h2></div>
+        <div class="case-section-body">
+<p class="note">
         The most useful decision was mapping the whole app before touching a single
         screen. Grouping friction by what people are trying to do — rather than by
         which tab it lives in — turned a long list of annoyances into six jobs, and
         made it obvious which two to leave alone.
       </p>
-    </section>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
 
-    <!-- ══ 07 Prototype ══ -->
-    <section class="chapter" data-reveal>
-      <div class="chapter-head"><span class="chapter-num">07</span><h2>The prototype</h2></div>
-      <p class="note">
+      </div>
+    </section>
+    <section class="case3-sec">
+      <div class="case3-text"><div class="case3-text-in" data-reveal="up">
+        <div class="case3-head"><span class="case-section-num">07</span><h2 class="case-section-title">The prototype</h2></div>
+        <div class="case-section-body">
+<p class="note">
         The film-page actions built as something you can actually press — logging a
         film, rating it, and adding it to a list, end to end.
       </p>
-
-      <figure class="proto-video">
+<div class="proto">
+        <a class="proto-btn" href="https://www.figma.com/make/sSIf1ukfxDH9tdS73ETvVx/Implement-Movie-Card-Actions?t=ySqm4IubNYsSzyoe-1"
+           target="_blank" rel="noopener">See the Figma Make prototype <span aria-hidden="true">&#8599;</span></a>
+      </div>
+        </div>
+      </div></div>
+      <div class="case3-visuals">
+<figure class="proto-video">
         <video id="proto-video" src="video/prototype.mp4"
                poster="video/prototype-poster.jpg"
                muted loop playsinline preload="none" controls
                aria-label="Screen recording of the Letterboxd prototype"></video>
       </figure>
-
-      <div class="proto">
-        <a class="proto-btn" href="https://www.figma.com/make/sSIf1ukfxDH9tdS73ETvVx/Implement-Movie-Card-Actions?t=ySqm4IubNYsSzyoe-1"
-           target="_blank" rel="noopener">See the Figma Make prototype <span aria-hidden="true">&#8599;</span></a>
       </div>
     </section>
+  </div>
+  </div>
 
-    <nav class="case-next" aria-label="Next project">
+<nav class="case-next" aria-label="Next project">
       <span class="case-kicker">Next project</span>
       <a href="work-redo.html"><span class="case-next-title">Re·do →</span></a>
     </nav>
 
-  </div>
 </main>
-
-<footer class="footer">
-  <div class="footer-bg" aria-hidden="true"></div>
-  <div class="footer-inner">
-
-    <div class="footer-col-left" data-reveal>
-      <p class="footer-heading">Let's create</p>
-      <div class="footer-contact">
-        <a href="mailto:rong.yenny@gmail.com">Email</a>
-        <a href="https://instagram.com/yennyrong" target="_blank" rel="noopener">Instagram</a>
-        <a href="https://www.tiktok.com/@yennyrong" target="_blank" rel="noopener">TikTok</a>
-        <a href="https://www.linkedin.com/in/yennyrong" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
-      <div class="footer-links-list">
-        <a href="files/Yenny-CV-ENGLISH.pdf" target="_blank" rel="noopener">CV</a>
-        <a href="about.html">About</a>
-        <span>Behance (Not yet)</span>
-      </div>
-    </div>
-
-    <div class="footer-skills">
-      <div class="footer-skill-col" data-reveal data-delay="1">
-        <h4>Instruments</h4>
-        <ul><li>Figma</li><li>Cursor</li><li>Claude</li><li>Readymag</li><li>Framer</li><li>Illustrator</li></ul>
-      </div>
-      <div class="footer-skill-col" data-reveal data-delay="2">
-        <h4>Hard Skills</h4>
-        <ul><li>AI-Assisted Design</li><li>UX Research</li><li>UI Design</li><li>Web Design</li><li>Copywriting</li></ul>
-      </div>
-      <div class="footer-skill-col" data-reveal data-delay="3">
-        <h4>Soft Skills</h4>
-        <ul><li>Management</li><li>Presentation Skills</li><li>Multilingual</li><li>Teamwork</li><li>Multicultural</li></ul>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="footer-base">
-    <span>© 2026 Yenny Rong</span>
-    <a href="#main">Back to top ↑</a>
-  </div>
-</footer>
 
 <script>
 (function () {
@@ -1123,6 +1133,7 @@
 })();
 </script>
 
+<script src="js/case3.js" defer></script>
 <script src="js/trail.js"></script>
 
 </body>

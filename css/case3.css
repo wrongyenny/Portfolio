@@ -57,6 +57,7 @@
   border-top: 1px solid rgba(0, 0, 0, 0.10);
 }
 .case3 .case-meta-item {
+  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: baseline;
@@ -128,3 +129,55 @@
   .case3 .case-title { font-size: clamp(28px, 6vw, 40px); }
   .case3 .case-next { margin-top: 24px; }
 }
+
+/* ── Shared bits for pages with their own inline text styles ── */
+.case3 .case-eyebrow {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.case3 .case-tagline { font-family: var(--font-mono); color: var(--text-muted); }
+
+/* Letterboxd (note / pull / diagrams / screens / prototype button) */
+.case3 .note,
+.case3 .pull {
+  max-width: none;
+  margin: 0;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  letter-spacing: -0.3px;
+}
+.case3 .note + .note { margin-top: 12px; }
+.case3 .pull { margin: 16px 0; padding-left: 14px; font-size: clamp(15px, 1.1vw, 18px); line-height: 1.5; }
+.case3 .scope { margin-top: 20px; }
+.case3 .pillars { margin-top: 8px; }
+.case3 .diagram { margin: 0; }
+.case3 .diagram svg { min-width: 0; }
+.case3 .screens { margin: 0; }
+.case3 .problems, .case3 .journeys { margin: 0; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); }
+.case3 .proto { margin-top: 22px; }
+.case3 .proto-btn { font-size: var(--text-sm); padding: 12px 18px; }
+.case3 .proto-video { margin: 0; }
+.case3 .shots { margin: 0; }
+
+/* Generic label styles (pages that don't define them inline) */
+.case3 .case-meta-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.case3 .case-meta-value { font-family: var(--font-mono); color: var(--color-text); }
+.case3 .case-section-num {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+.case3 .case-section-title { font-family: var(--font-mono); font-weight: 700; line-height: 1.15; color: var(--color-text); }
+.case3 .scope-label { margin: 0 0 10px; font-size: var(--text-xs); }
+.case3 .pillars { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; list-style: none; }
+.case3 .pillars li { padding: 6px 10px; font-size: var(--text-xs); }
