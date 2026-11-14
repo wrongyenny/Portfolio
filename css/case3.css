@@ -188,3 +188,13 @@
 
 /* Hero images: a little taller so the visuals column outweighs the text */
 .case3 .case3-visuals .case-hero-img { aspect-ratio: 16 / 9; }
+
+/* Section labels inside the visuals column (Letterboxd) */
+.case3 .case3-label {
+  margin: clamp(28px, 3vw, 48px) 0 -6px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
